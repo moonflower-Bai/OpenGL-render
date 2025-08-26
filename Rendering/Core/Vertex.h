@@ -8,14 +8,14 @@
 #include <Eigen/Eigen>
 
 struct alignas(16) Vertex {
-	Vertex(Eigen::Vector4f color, Eigen::Vector3f position, Eigen::Vector2f texCoord){
+	Vertex(Eigen::Vector4f color, Eigen::Vector4f position, Eigen::Vector2f texCoord){
 		this->color = color;
 		this->position = position;
 		this->texCoord = texCoord;
 	}
 	EIGEN_MAKE_ALIGNED_OPERATOR_NEW
 	Eigen::Vector4f color;
-	Eigen::Vector3f position;
+	Eigen::Vector4f position;
 	Eigen::Vector2f texCoord;
 };
 

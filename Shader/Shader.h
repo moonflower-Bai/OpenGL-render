@@ -31,6 +31,8 @@ public:
 	void setVec3(const std::string &name, Eigen::Vector3f value);
 	void setVec4(const std::string &name, float x, float y, float z, float w);
 	void setVec4(const std::string &name, Eigen::Vector4f value);
+	void setMat4(const std::string &name, Eigen::Matrix4f value);
+	void setMat4(const std::string &name, glm::mat4 value);
 	std::string getVertexPath();
 	std::string getFragmentPath();
 	unsigned int getProgramID();

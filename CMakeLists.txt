@@ -45,7 +45,10 @@ add_executable(LearnOpenGL main.cpp
         utils/getProgramPath.cpp
         Rendering/Core/ResourceManager.cpp
         Rendering/Core/ResourceManager.h
-        Rendering/Primitives/ObjectConfig.h
+        Rendering/Asserts/ModelLoader.cpp
+        Rendering/Asserts/ModelLoader.h
+        Rendering/Primitives/RenderBuilder.cpp
+        Rendering/Primitives/RenderBuilder.h
 )
 
 

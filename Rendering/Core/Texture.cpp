@@ -63,3 +63,12 @@ void Texture::bind() {
 	glActiveTexture(GL_TEXTURE0);
 	glBindTexture(GL_TEXTURE_2D, texture);
 }
+
+bool Texture::empty() const {
+	if(texture == 0){
+		return true;
+	}
+	else{
+		return false;
+	}
+}

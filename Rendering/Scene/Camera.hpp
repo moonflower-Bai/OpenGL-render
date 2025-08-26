@@ -5,36 +5,29 @@
 #ifndef LEARNOPENGL_CAMERA_HPP
 #define LEARNOPENGL_CAMERA_HPP
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 
 class Camera {
 private:
-	Eigen::Matrix4d projectionMatrix = Eigen::Matrix4d::Identity();
-	Eigen::Matrix4d viewMatrix = Eigen::Matrix4d::Identity();
-	Eigen::Matrix4d projectionViewMatrix = Eigen::Matrix4d::Identity();
-protected:
-	Eigen::Vector3d cameraPosition; // 相机位置
-	Eigen::Vector3d cameraDirection; // 朝向
-	Eigen::Vector3d cameraUp;
-
-	double m_fov = 45.0;
-	double m_near = 0.1;
-	double m_far = 100.0;
+	Eigen::Vector3f cameraDirection;
+	Eigen::Vector3f cameraPosition;
+	Eigen::Vector3f cameraUp;
+	Eigen::Matrix4f projectionMatrix;
+	Eigen::Matrix4f viewMatrix;
+	float fov, aspect, near, far;
+	void updateProjectionMatrix(); // 遇到参数更新时调用
+	void updateViewMatrix(); // 遇到参数更新时调用
+	void update(); // 同时更新投影矩阵和视图矩阵
+	void init(); // 初始化
 public:
-	Camera(Eigen::Vector3d cameraPosition, Eigen::Vector3d cameraDirection, Eigen::Vector3d cameraUp);
-	Eigen::Vector3d getCameraPosition();
-	Eigen::Vector3d getCameraDirection();
-	Eigen::Vector3d getCameraUp();
-	void setCameraPosition(Eigen::Vector3d cameraPosition);
-	void setCameraDirection(Eigen::Vector3d cameraDirection);
-	void setCameraUp(Eigen::Vector3d cameraUp);
-	Eigen::Matrix4d getProjectionViewMatrix();
-	Eigen::Matrix4d getViewMatrix();
-	Eigen::Matrix4d getProjectionMatrix();
-
-public:
-	Eigen::Matrix4d getProjectionMatrix(double fov, double aspect, double near, double far);
-	void setLookAt(Eigen::Vector3d cameraPosition, Eigen::Vector3d cameraTarget, Eigen::Vector3d cameraUp);
+	Camera();
+	Camera(Eigen::Vector3f cameraPosition, Eigen::Vector3f cameraTarget, Eigen::Vector3f cameraUp, float fov, float aspect, float near, float far);
+	Eigen::Matrix4f getProjectionMatrix(); // 只返回，不做计算
+	Eigen::Matrix4f getViewMatrix(); // 只返回，不做计算
+	void setCameraPosition(Eigen::Vector3f cameraPosition); // 更新参数后调用update()
+	void setCameraDirection(Eigen::Vector3f cameraDirection);
+	void setCameraUp(Eigen::Vector3f cameraUp);
+	void setParameters(float fov, float aspect, float near, float far); // 遇到参数更新时调用update()
 };
 
 

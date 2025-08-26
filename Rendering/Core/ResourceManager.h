@@ -20,7 +20,9 @@ public:
 	static void destroy();
 
 	static Shader& getShader(std::string vertexPath, std::string fragmentPath);
-	static Texture& getTexture(std::string texturePath);
+	static Texture getTexture(std::string texturePath);
+
+	static Shader& getDefaultShader();
 };
 
 

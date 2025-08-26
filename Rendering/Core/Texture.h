@@ -22,6 +22,7 @@ public:
 	Texture(const Texture &texture) = delete;
 	Texture& operator=(Texture &&texture) noexcept ;
 	Texture& operator=(const Texture &texture) = delete;
+	bool empty() const;
 	Texture();
 	~Texture();
 

@@ -72,6 +72,8 @@ void MainRenderThread::initWindow(int width, int height) {
 		instance().m_stopRequested = true;
 	});
 	glEnable(GL_DEPTH_TEST);
+	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+//	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	LOG_INFO << "Window initialized";
 }
 void MainRenderThread::add(std::unique_ptr<ObjectRender> object) {

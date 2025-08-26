@@ -125,3 +125,11 @@ Shader& Shader::operator=(Shader _shader) {
 	std::swap(programID, _shader.programID);
 	return *this;
 }
+
+void Shader::setMat4(const std::string &name, Eigen::Matrix4f value) {
+	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, value.data());
+}
+
+void Shader::setMat4(const std::string &name, glm::mat4 value) {
+	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, &value[0][0]);
+}
