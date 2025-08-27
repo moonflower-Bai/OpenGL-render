@@ -1,4 +1,4 @@
-//
+﻿//
 // Created by Jingren Bai on 25-7-16.
 //
 
@@ -14,7 +14,10 @@ private:
 	Eigen::Vector3f cameraUp;
 	Eigen::Matrix4f projectionMatrix;
 	Eigen::Matrix4f viewMatrix;
-	float fov, aspect, near, far;
+	float fov;
+	float aspect;
+	float znear;
+	float zfar;
 	void updateProjectionMatrix(); // 遇到参数更新时调用
 	void updateViewMatrix(); // 遇到参数更新时调用
 	void update(); // 同时更新投影矩阵和视图矩阵

@@ -65,7 +65,7 @@ RECENT REVISION HISTORY:
       2.16  (2017-07-23) all functions have 16-bit variants; optimizations; bugfixes
       2.15  (2017-03-18) fix png-1,2,4; all Imagenet JPGs; no runtime SSE detection on GCC
       2.14  (2017-03-03) remove deprecated STBI_JPEG_OLD; fixes for Imagenet JPGs
-      2.13  (2016-12-04) experimental 16-bit API, only for PNG so far; fixes
+      2.13  (2016-12-04) experimental 16-bit API, only for PNG so zfar; fixes
       2.12  (2016-04-02) fix typo in 2.11 PSD fix that caused crashes
       2.11  (2016-04-02) 16-bit PNGS; enable SSE2 in non-gcc x64
                          RGB-format JPEG; remove white matting in PSD;
@@ -716,7 +716,7 @@ typedef unsigned char validate_uint32[sizeof(stbi__uint32)==4 ? 1 : -1];
 //
 // See https://github.com/nothings/stb/issues/81 for more information.
 //
-// So default to no SSE2 on 32-bit MinGW. If you've read this far and added
+// So default to no SSE2 on 32-bit MinGW. If you've read this zfar and added
 // -mstackrealign to your build settings, feel free to #define STBI_MINGW_ENABLE_SSE2.
 #define STBI_NO_SIMD
 #endif
@@ -3851,7 +3851,7 @@ typedef struct
    stbi_uc *line0,*line1;
    int hs,vs;   // expansion factor in each axis
    int w_lores; // horizontal pixels pre-expansion
-   int ystep;   // how far through vertical expansion we are
+   int ystep;   // how zfar through vertical expansion we are
    int ypos;    // which pre-expansion row we're on
 } stbi__resample;
 
@@ -5841,7 +5841,7 @@ static int stbi__tga_test(stbi__context *s)
    if ( (tga_color_type == 1) && (sz != 8) && (sz != 16) ) goto errorEnd; // for colormapped images, bpp is size of an index
    if ( (sz != 8) && (sz != 15) && (sz != 16) && (sz != 24) && (sz != 32) ) goto errorEnd;
 
-   res = 1; // if we got this far, everything's good and we can return 1 instead of 0
+   res = 1; // if we got this zfar, everything's good and we can return 1 instead of 0
 
 errorEnd:
    stbi__rewind(s);
@@ -6561,7 +6561,7 @@ typedef struct
 {
    int w,h;
    stbi_uc *out;                 // output buffer (always 4 components)
-   stbi_uc *background;          // The current "background" as far as a gif is concerned
+   stbi_uc *background;          // The current "background" as zfar as a gif is concerned
    stbi_uc *history;
    int flags, bgindex, ratio, transparent, eflags;
    stbi_uc  pal[256][4];

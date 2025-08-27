@@ -5,6 +5,8 @@
 #include "TriangleRendering.h"
 
 #include <utility>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "utils/log.cpp"
 
 std::vector<Vertex> TriangleRendering::getVertices() {
@@ -51,7 +53,43 @@ void TriangleRendering::render() {
 	m_shader.use();
 	m_texture.bind();
 	m_shader.setInt("ourTexture", 0);
+
+	glm::mat4 view = glm::mat4(1.0f);
+	glm::mat4 model = glm::mat4(1.0f);
+
+
+	glm::vec3 camPos = glm::vec3(0.0f, 0.0f, 3.0f);
+	glm::vec3 camTarget = glm::vec3(0.0f, 0.0f, 0.0f);
+	glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f);
+	glm::vec3 cameraDirection = glm::normalize(camPos - camTarget);
+	glm::vec3 cameraRight = glm::normalize(glm::cross(cameraDirection, up));
+	glm::vec3 cameraUp = glm::normalize(glm::cross(cameraRight, cameraDirection));
+	auto projection = glm::perspective(glm::radians(45.0f), (float)800 / (float)600, 0.1f, 100.0f);
+//	auto view = glm::lookAt(glm::vec3(3, 0, 0), glm::vec3(0, 0, 0), glm::vec3(0, 1, 0));
+	view = glm::lookAt(camPos, camTarget, up);
+//	view = glm::translate(view, glm::vec3(0.0f, 0.0f, -3.0f));
+	model = glm::translate(model, glm::vec3(position.x(), position.y(), position.z()));
+	float angle = glfwGetTime() * 50.0f;
+	model = glm::rotate(model, glm::radians(angle), glm::vec3(1.0f, 0.3f, 0.5f));
+//	auto model = glm::translate(glm::mat4(1.0f), glm::vec3(0.0f, 0.0f, 0.0f));
+//	model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
+	auto tmp = (projection * view * model);
+//	auto tmp = (view * model);
+//	auto tmp = (projection * view);
+//	auto tmp = (view);
+//	auto tmp = (projection);
+//	auto tmp = glm::mat4(1.0f);
+	Eigen::Matrix4f mvp;
+	for(int i = 0; i < 4; i++){
+		for(int j = 0; j < 4; j++){
+			mvp(i, j) = tmp[i][j];
+		}
+	}
+	m_shader.setMat4("mvp", mvp.transpose());
 //	LOG_INFO << "Shader program ID: " << m_shader.getProgramID();
+//	m_shader.setMat4("model", model);
+//	m_shader.setMat4("view", view);
+//	m_shader.setMat4("projection", projection);
 	glBindVertexArray(VAO);
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 //	glDrawElements(GL_TRIANGLES, 3, GL_UNSIGNED_INT, 0);
@@ -79,4 +117,8 @@ void TriangleRendering::setVertexShaderPath(std::string vertexShaderPath) {
 }
 void TriangleRendering::setFragmentShaderPath(std::string fragmentShaderPath) {
 	this->m_fragmentShaderPath = std::move(fragmentShaderPath);
+}
+
+Shader* TriangleRendering::getShader() {
+	return &m_shader;
 }

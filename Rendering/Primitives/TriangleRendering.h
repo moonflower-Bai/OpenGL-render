@@ -25,6 +25,8 @@ public:
 	void update() override { /* empty */}
 	void render() override;
 	void destroy() override;
+
+	Shader* getShader();
 };
 
 

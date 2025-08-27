@@ -15,7 +15,6 @@
 
 class RenderBuilder {
 private:
-
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
 	Shader shader;
@@ -26,7 +25,8 @@ private:
 	bool enableDepthTesting = true;
 
 public:
-	explicit RenderBuilder();
+	RenderBuilder(const RenderBuilder &builder);
+	RenderBuilder();
 //	RenderBuilder() = default;
 	RenderBuilder& withVertices(std::vector<Vertex> vertices);
 	RenderBuilder& withIndices(std::vector<unsigned int> indices);

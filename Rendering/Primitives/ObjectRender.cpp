@@ -15,3 +15,7 @@ void ObjectRender::destroy(){
 void ObjectRender::setTexturePath(std::string texturePath) {
 	m_texturePath = texturePath;
 }
+
+void ObjectRender::setPosition(Eigen::Vector3f position) {
+	this->position = position;
+}

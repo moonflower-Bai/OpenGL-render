@@ -10,14 +10,14 @@ void Camera::update() {
 void Camera::updateProjectionMatrix() {
 	projectionMatrix = Eigen::Matrix4f::Identity();
 	float f = std::tan(fov / 2);
-	float t = f * near;
+	float t = f * znear;
 	float b = -t;
 	float r = t * aspect;
 	float l = -r;
 	projectionMatrix <<
-		2 * near / (r - l), 0, (r + l) / (r - l), 0,
-		0, 2 * near / (t - b), (t + b) / (t - b), 0,
-		0, 0, -(far + near) / (far - near), -2 * far * near / (far - near),
+					 2 * znear / (r - l), 0, (r + l) / (r - l), 0,
+		0, 2 * znear / (t - b), (t + b) / (t - b), 0,
+		0, 0, -(zfar + znear) / (zfar - znear), -2 * zfar * znear / (zfar - znear),
 		0, 0, -1, 0
 	;
 }

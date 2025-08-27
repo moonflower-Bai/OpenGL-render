@@ -19,6 +19,7 @@ protected:
 	unsigned int programID;
 	unsigned int VAO, VBO, EBO;
 	Texture m_texture;
+	Eigen::Vector3f position;
 public:
 	bool isInitialized = false;
 	virtual ~ObjectRender() = default;
@@ -28,6 +29,7 @@ public:
 	virtual void render() = 0;
 	virtual void destroy();
 	void setTexturePath(std::string texturePath);
+	void setPosition(Eigen::Vector3f position);
 };
 
 

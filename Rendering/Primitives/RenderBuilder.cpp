@@ -32,7 +32,7 @@ RenderBuilder &RenderBuilder::withTexture(std::string texturePath) {
 
 RenderBuilder &RenderBuilder::withoutTexture() {
 	enableTexture = false;
-	texture = nullptr;
+//	texture = nullptr;
 	return *this;
 }
 
@@ -47,20 +47,29 @@ std::unique_ptr<ObjectRender> RenderBuilder::build() {
 
 std::unique_ptr<TriangleRendering> RenderBuilder::buildTriangle() {
 	auto triangle = std::make_unique<TriangleRendering>();
-	triangle->setVertices(vertices);
-	triangle->setShader(shader);
-	if(enableTexture && !texture.empty()) {
-		triangle->setTexture(texture);
-	}
-
-	triangle->setDepthTesting(enableDepthTesting);
+//	triangle->setVertices(vertices);
+//	triangle->setShader(shader);
+//	if(enableTexture && !texture.empty()) {
+//		triangle->setTexture(texture);
+//	}
+//
+//	triangle->setDepthTesting(enableDepthTesting);
 	return triangle;
 }
 
 RenderBuilder RenderBuilder::createDefault() {
 	//FIXME: 编译器会报错，暂时用这个占位
-//	return RenderBuilder()
-//	.withDefaultShader()
-//	.withDepthTesting(true);
-	return RenderBuilder();
+	return RenderBuilder()
+	.withDefaultShader()
+	.withDepthTesting(true);
+//	return RenderBuilder();
 }
+
+RenderBuilder::RenderBuilder() {
+	enableTexture = false;
+}
+
+RenderBuilder::RenderBuilder(const RenderBuilder &builder) {
+	
+}
+
