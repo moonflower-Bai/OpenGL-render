@@ -9,28 +9,30 @@
 
 class Camera {
 private:
-	Eigen::Vector3f cameraDirection;
+	Eigen::Vector3f cameraTarget;
 	Eigen::Vector3f cameraPosition;
-	Eigen::Vector3f cameraUp;
-	Eigen::Matrix4f projectionMatrix;
-	Eigen::Matrix4f viewMatrix;
-	float fov;
-	float aspect;
-	float znear;
-	float zfar;
-	void updateProjectionMatrix(); // 遇到参数更新时调用
-	void updateViewMatrix(); // 遇到参数更新时调用
-	void update(); // 同时更新投影矩阵和视图矩阵
-	void init(); // 初始化
+	Eigen::Vector3f worldUp;
+
+	float fov, aspect, znear, zfar;
+
+	mutable Eigen::Matrix4f projectionMatrix;
+	mutable Eigen::Matrix4f viewMatrix;
+	mutable bool projectionMatrixDirty = true;
+	mutable bool viewMatrixDirty = true;
+
+	void updateProjectionMatrix() const;
+	void updateViewMatrix() const;
 public:
-	Camera();
-	Camera(Eigen::Vector3f cameraPosition, Eigen::Vector3f cameraTarget, Eigen::Vector3f cameraUp, float fov, float aspect, float near, float far);
+	Camera() = default;
+	Camera(Eigen::Vector3f cameraPosition, Eigen::Vector3f cameraTarget, Eigen::Vector3f up, float fov, float aspect, float near, float far);
 	Eigen::Matrix4f getProjectionMatrix(); // 只返回，不做计算
 	Eigen::Matrix4f getViewMatrix(); // 只返回，不做计算
 	void setCameraPosition(Eigen::Vector3f cameraPosition); // 更新参数后调用update()
-	void setCameraDirection(Eigen::Vector3f cameraDirection);
-	void setCameraUp(Eigen::Vector3f cameraUp);
+	void setCameraTarget(Eigen::Vector3f cameraTarget);
+	void setWorldUp(Eigen::Vector3f up);
 	void setParameters(float fov, float aspect, float near, float far); // 遇到参数更新时调用update()
+
+public:
 };
 
 

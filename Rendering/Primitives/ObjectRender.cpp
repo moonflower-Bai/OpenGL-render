@@ -16,6 +16,9 @@ void ObjectRender::setTexturePath(std::string texturePath) {
 	m_texturePath = texturePath;
 }
 
-void ObjectRender::setPosition(Eigen::Vector3f position) {
+void ObjectRender::setPosition(Eigen::Vector4f position) {
 	this->position = position;
+}
+void ObjectRender::setCamera(Camera camera) {
+	this->m_camera = camera;
 }

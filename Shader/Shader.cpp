@@ -127,7 +127,9 @@ Shader& Shader::operator=(Shader _shader) {
 }
 
 void Shader::setMat4(const std::string &name, Eigen::Matrix4f value) {
-	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, value.data());
+	Eigen::Matrix<float, 4, 4, Eigen::RowMajor> value_ = value.transpose();
+//	value_.transposeInPlace();
+	glUniformMatrix4fv(glGetUniformLocation(programID, name.c_str()), 1, GL_FALSE, value_.data());
 }
 
 void Shader::setMat4(const std::string &name, glm::mat4 value) {

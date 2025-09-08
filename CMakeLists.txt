@@ -49,6 +49,12 @@ add_executable(LearnOpenGL main.cpp
         Rendering/Asserts/ModelLoader.h
         Rendering/Primitives/RenderBuilder.cpp
         Rendering/Primitives/RenderBuilder.h
+        Rendering/Scene/Model.cpp
+        Rendering/Scene/Model.h
+        Rendering/Scene/Quaternions.cpp
+        Rendering/Scene/Quaternions.h
+        Input/InputSystem.cpp
+        Input/InputSystem.h
 )
 
 

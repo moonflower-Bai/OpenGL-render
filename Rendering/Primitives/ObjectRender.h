@@ -11,6 +11,7 @@
 #include <string>
 #include "Rendering/Core/Vertex.h"
 #include "Rendering/Core/Texture.h"
+#include "Rendering/Scene/Camera.hpp"
 
 class ObjectRender {
 protected:
@@ -19,7 +20,8 @@ protected:
 	unsigned int programID;
 	unsigned int VAO, VBO, EBO;
 	Texture m_texture;
-	Eigen::Vector3f position;
+	Eigen::Vector4f position;
+	Camera m_camera;
 public:
 	bool isInitialized = false;
 	virtual ~ObjectRender() = default;
@@ -28,8 +30,9 @@ public:
 	virtual void update() = 0;
 	virtual void render() = 0;
 	virtual void destroy();
+	void setCamera(Camera camera);
 	void setTexturePath(std::string texturePath);
-	void setPosition(Eigen::Vector3f position);
+	void setPosition(Eigen::Vector4f position);
 };
 
 
