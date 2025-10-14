@@ -7,6 +7,10 @@
         <option value="$PROJECT_DIR$/Extern" />
         <option value="$PROJECT_DIR$/.idea" />
         <option value="$PROJECT_DIR$/cmake-build-debug" />
+        <option value="$PROJECT_DIR$/out" />
+        <option value="$PROJECT_DIR$/cmake-build-release" />
+        <option value="$PROJECT_DIR$/cmake-build-release-visual-studio" />
+        <option value="$PROJECT_DIR$/.vs" />
       </list>
     </option>
   </component>

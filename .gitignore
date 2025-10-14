@@ -1,1 +1,6 @@
 /cmake-build-debug-visual-studio
+/cmake-build-release
+/cmake-build-release-visual-studio
+/.vs
+/.idea
+/.vscode

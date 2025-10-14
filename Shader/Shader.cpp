@@ -18,7 +18,12 @@ void Shader::checkCompileErrors(unsigned int shader){
 Shader::Shader(std::string vertexPath, std::string fragmentPath) {
 	ReadShader VertexShader(vertexPath);
 	char* vertexShader = VertexShader.getShader();
+	LOG_INFO << "Get Vertex Shader Source: " << vertexShader << '\n';
 	unsigned int vertexShaderID = glCreateShader(GL_VERTEX_SHADER);
+	if(!vertexShaderID){
+		LOG_ERROR << "ERROR::SHADER::VERTEX::COMPILATION_FAILED\n" << vertexShaderID << '\n';
+	}
+//	LOG_INFO << "Get Vertex Shader ID: " << vertexShaderID << '\n';
 	glShaderSource(vertexShaderID, 1, &vertexShader, nullptr);
 	glCompileShader(vertexShaderID);
 	checkCompileErrors(vertexShaderID);

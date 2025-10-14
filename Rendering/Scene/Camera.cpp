@@ -97,5 +97,18 @@ void Camera::updateProjectionMatrix() const {
 		0, 0, f + n, -f * n,
 		0, 0, 1, 0;
 	projectionMatrix = -(ortho * translate) * perspective;
+	LOG_INFO << '\n' << projectionMatrix << '\n';
+	/* input:
+	 * fov = 45.0f
+	 * aspect = 800.0f / 600.0f
+	 * near = 0.1f
+	 * far = 100.0f
+	 *
+	 * output:
+	 * 1.81066       0       0       0
+     * 0 2.41421       0       0
+     * 0       0  -1.002 -0.2002
+     * 0       0      -1       0
+	 */
 	projectionMatrixDirty = 0;
 }

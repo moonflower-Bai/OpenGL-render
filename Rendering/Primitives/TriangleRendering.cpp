@@ -19,6 +19,10 @@ void TriangleRendering::init() {
 	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
 	glBindBuffer(GL_ARRAY_BUFFER, VBO);
+//	LOG_INFO << "verticesArray: \n" << vertices << '\n';
+	m_texture = Texture(m_texturePath);
+
+	Vertex *verticesArray = vertices.data(); // 注意这里直接是指针，在下面的函数中，不要加取地址
 	/*
 	 * parameter:
 	 * target: 缓冲的类型
@@ -31,10 +35,6 @@ void TriangleRendering::init() {
 	 * 	GL_STREAM_DRAW: 缓冲数据每次使用一次就丢弃
 	 * 缓冲对象数据
 	 */
-//	LOG_INFO << "verticesArray: \n" << vertices << '\n';
-	m_texture = Texture(m_texturePath);
-
-	Vertex *verticesArray = vertices.data(); // 注意这里直接是指针，在下面的函数中，不要加取地址
 	glBufferData(GL_ARRAY_BUFFER, sizeof(Vertex) * vertices.size(), verticesArray, GL_STATIC_DRAW);
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)offsetof(Vertex, position));
 	glEnableVertexAttribArray(0);
@@ -44,11 +44,7 @@ void TriangleRendering::init() {
 	glEnableVertexAttribArray(2);
 	glBindBuffer(GL_ARRAY_BUFFER, 0);
 	glBindVertexArray(0);
-
 }
-
-#include "Rendering/Scene/Model.h"
-#include "Rendering/Scene/Camera.hpp"
 
 void TriangleRendering::render() {
 //	glUseProgram(programID);
@@ -57,8 +53,8 @@ void TriangleRendering::render() {
 	m_shader.setInt("ourTexture", 0);
 	auto projection = m_camera.getProjectionMatrix();
 	auto view = m_camera.getViewMatrix();
-	float angle = glfwGetTime() * 1.0f;
-	auto model = Model::getTranslate(position) * Model::getRotation({angle, {1.0f, 0.3f, 0.5f}});
+//	float angle = glfwGetTime() * 1.0f;
+	auto model = Model::getTranslate(position) * Model::getRotation({0, {1.0f, 0.3f, 0.5f}});
 	m_shader.setMat4("projection", projection);
 	m_shader.setMat4("view", view);
 	m_shader.setMat4("model", model);
@@ -92,4 +88,8 @@ void TriangleRendering::setFragmentShaderPath(std::string fragmentShaderPath) {
 
 Shader* TriangleRendering::getShader() {
 	return &m_shader;
+}
+
+void TriangleRendering::setTexturePath(std::string texturePath) {
+	m_texturePath = texturePath;
 }

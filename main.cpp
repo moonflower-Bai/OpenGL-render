@@ -7,6 +7,9 @@
 #include "Extern/stb_image.h"
 #include "utils/getProgramPath.h"
 #include "Rendering/Scene/Camera.hpp"
+#include "Rendering/Primitives/PointRender.h"
+
+#pragma comment(linker, "/STACK:1073741824")
 
 int width = 800, height = 600;
 int main(){
@@ -23,6 +26,7 @@ int main(){
 //		Vertex(aling, Eigen::Vector4f(0, 1, 0, 1), Eigen::Vector2f(0, 1)),
 //		Vertex(aling, Eigen::Vector4f(1, 1, 0, 1), Eigen::Vector2f(1, 1))
 //	};
+/*
 	float vertices[] = {
 			-0.5f, -0.5f,  0.5f,  0.0f, 0.0f,
 			0.5f, -0.5f,  0.5f,  1.0f, 0.0f,
@@ -102,13 +106,46 @@ int main(){
 			MainRenderThread::add(std::move(tgr));
 //		}
 	}
+ */
 //	auto tmpT = std::make_unique<TriangleRendering>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tmpT));
 //	auto tgr1 = std::make_unique<TriangleRendering>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tgr1));
 //	auto tgr2 = std::make_unique<TriangleRendering>(vertices_2, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tgr2));
-
+//	Camera camera({0.0f, 0.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f},
+	Camera camera({0, 0, 3.0f}, {0.0f, 0.0f, 0.0f}, {0, 1, 0},
+		   45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
+	std::string projectRoot = getProjectPath();
+	//std::string pointVertexShaderPath = projectRoot + "/Shader/Points/Point.vert";
+	std::string pointVertexShaderPath = "D:/Code/LearnOpenGL/Shader/Points/Point.vert";
+	//std::string pointFragmentShaderPath = projectRoot + "/Shader/Points/Point.frag";
+	std::string pointFragmentShaderPath = "D:/Code/LearnOpenGL/Shader/Points/Point.frag";
+//	auto position = Eigen::Vector4f(15, 10, 30, 10);
+	auto position = Eigen::Vector4f(-1, -1, 0, 1);
+	std::string texturePath = "/Texture/wall.jpg";
+//	auto ptr = std::make_unique<PointRender>(500, pointVertexShaderPath, pointFragmentShaderPath);
+//	ptr->setPosition(position);
+//	ptr->setCamera(camera);
+//	MainRenderThread::add(std::move(ptr));
+//	auto sim = SimulatorCache(50000);
+//	std::vector<Vertex> vertices;
+//	auto particles = sim.getParticles();
+//	for (auto particle : particles){
+//		vertices.push_back(Vertex::particlesToVertex(particle));
+//		vertices.back().color = {1.0f, 1.0f, 1.0f, 1.0f};
+//		vertices.back().position = {vertices.back().position.x(), vertices.back().position.y(), vertices.back().position.z(), 20.0f};
+//		LOG_INFO << "PointRender::update()\n" << vertices.back().position << '\n';
+//	}
+//	auto tgr = std::make_unique<TriangleRendering>(vertices, pointVertexShaderPath, pointFragmentShaderPath, texturePath);
+//	tgr->setPosition({0, 0, 0, 1});
+//	tgr->setCamera(camera);
+//	MainRenderThread::add(std::move(tgr));
+	auto ptr = std::make_unique<PointRender>(25000, pointVertexShaderPath, pointFragmentShaderPath);
+	ptr->setPosition(position);
+	ptr->setCamera(camera);
+//	ptr->setVertices(vertices);
+	MainRenderThread::add(std::move(ptr));
 	MainRenderThread::instance().waitForExit();
 	return 0;
 }

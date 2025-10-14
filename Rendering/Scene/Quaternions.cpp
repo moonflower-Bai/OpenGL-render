@@ -22,6 +22,6 @@ Eigen::Matrix4f Quaternions::getRotationMatrix() {
 			w * w + x * x - y * y - z * z, 2 * (x * y - w * z), 2 * (x * z + w * y), 0,
 			2 * (x * y + w * z), w * w - x * x + y * y - z * z, 2 * (y * z - w * x), 0,
 			2 * (x * z - w * y), 2 * (y * z + w * x), w * w - x * x - y * y + z * z, 0,
-			0, 0, 0, 1;
+			0, 0, 0, 1; // 公式
 	return rotationMatrix;
 }

@@ -13,6 +13,7 @@ private:
 //	Eigen::Matrix<float, 3, 3, Eigen::RowMajor> vertices;
 	std::string m_vertexShaderPath;
 	std::string m_fragmentShaderPath;
+	Texture m_texture;
 	Shader m_shader;
 public:
 	explicit TriangleRendering(const std::vector<Vertex> vertices, std::string vertexShaderPath, std::string fragmentShaderPath, std::string texturePath);
@@ -21,6 +22,7 @@ public:
 	std::vector<Vertex> getVertices();
 	void setVertexShaderPath(std::string vertexShaderPath);
 	void setFragmentShaderPath(std::string fragmentShaderPath);
+	void setTexturePath(std::string texturePath);
 	void init() override;
 	void update() override { /* empty */}
 	void render() override;

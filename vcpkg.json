@@ -1,11 +1,11 @@
 {
-  "name": "learnopegl",
-  "version": "1.0.0",
-  "dependencies": [
-    "glfw3",
-    "glad",
-    "glm",
-    "eigen3",
-    "gtest"
-  ]
+    "name": "learnopegl",
+    "version": "1.0.0",
+    "builtin-baseline": "30f771d4acf01bc7773d5c602443e7f839844a15",
+    "dependencies": [
+        "glfw3",
+        "glad",
+        "glm",
+        "eigen3"
+    ]
 }

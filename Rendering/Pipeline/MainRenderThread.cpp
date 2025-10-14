@@ -72,6 +72,7 @@ void MainRenderThread::initWindow(int width, int height) {
 		instance().m_stopRequested = true;
 	});
 	glEnable(GL_DEPTH_TEST);
+	glEnable(GL_PROGRAM_POINT_SIZE);
 //	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	LOG_INFO << "Window initialized";
 }
@@ -126,6 +127,9 @@ void MainRenderThread::processPendingObjects() {
 			object->init();
 			object->isInitialized = true;
 		}
+//		else{
+//			object->update();
+//		}
 	}
 }
 void MainRenderThread::stop() {
