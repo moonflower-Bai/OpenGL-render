@@ -58,6 +58,10 @@ add_executable(LearnOpenGL main.cpp
         Rendering/Primitives/Ball/BallRender.cpp
         Rendering/Primitives/Ball/BallRender.h
         Rendering/Primitives/Base/RenderConfig.h
+        Rendering/Primitives/Entity.cpp
+        Rendering/Primitives/Entity.h
+        Rendering/Primitives/Component.cpp
+        Rendering/Primitives/Component.h
         #        Input/InputSystem.cpp
 #        Input/InputSystem.h
 )

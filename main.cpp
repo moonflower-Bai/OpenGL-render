@@ -8,11 +8,49 @@
 #include "utils/getProgramPath.h"
 #include "Rendering/Scene/Camera.hpp"
 #include "Rendering/Primitives/Point/PointRender.h"
+#include "Rendering/Primitives/Ball/BallRender.h"
 
 #pragma comment(linker, "/STACK:1073741824")
 
-int width = 800, height = 600;
+int width = 1200, height = 600;
+int lighting_main();
+int pst_main();
+
 int main(){
+	return lighting_main();
+//	return pst_main();
+}
+int lighting_main(){
+	MainRenderThread::init(width, height);
+	Camera camera({0, 0, 3.0f}, {0.0f, 0.0f, 0.0f}, {0, 1, 0},
+		   45.0f, static_cast<float>(width) / static_cast<float>(height), 0.1f, 100.0f);
+
+	std::string projectRoot = getProjectPath();
+	std::string PhongShader[] = {
+			projectRoot + "/Shader/Ball/PhongShading/PhongShading.frag",
+			projectRoot + "/Shader/Ball/PhongShading/PhongShading.vert"
+	};
+
+	std::string GouraudShader[] = {
+			projectRoot + "/Shader/Ball/GouraudShading/GouraudShading.frag",
+			projectRoot + "/Shader/Ball/GouraudShading/GouraudShading.vert"
+	};
+
+	auto position1 = Eigen::Vector4f(-1, 0, 0, 1);
+	auto position2 = Eigen::Vector4f(1, 0, 0, 1);
+	auto phong = std::make_unique<BallRender>(1.0f, PhongShader[1], PhongShader[0]);
+	auto gouraud = std::make_unique<BallRender>(1.0f, GouraudShader[1], GouraudShader[0]);
+	phong->setPosition(position1);
+	phong->setCamera(camera);
+	gouraud->setPosition(position2);
+	gouraud->setCamera(camera);
+	MainRenderThread::add(std::move(gouraud));
+	MainRenderThread::add(std::move(phong));
+	MainRenderThread::instance().waitForExit();
+	return 0;
+}
+
+int pst_main(){
 	MainRenderThread::init(width, height);
 //	Eigen::Vector4f tianyi(0x66 / 255.0, 0xcc / 255.0, 0xff / 255.0, 1.0f);
 //	Eigen::Vector4f aling(0xee / 255.0, 0x00 / 255.0, 0x00 / 255.0, 1.0f);

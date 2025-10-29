@@ -30,7 +30,11 @@ Shader::Shader(std::string vertexPath, std::string fragmentPath) {
 
 	ReadShader FragmentShader(fragmentPath);
 	char* fragmentShader = FragmentShader.getShader();
+	LOG_INFO << "Get Fragment Shader Source: " << fragmentShader << '\n';
 	unsigned int fragmentShaderID = glCreateShader(GL_FRAGMENT_SHADER);
+	if(!fragmentShaderID){
+		LOG_ERROR << "ERROR::SHADER::FRAGMENT::COMPILATION_FAILED\n" << fragmentShaderID << '\n';
+	}
 	glShaderSource(fragmentShaderID, 1, &fragmentShader, nullptr);
 	glCompileShader(fragmentShaderID);
 	checkCompileErrors(fragmentShaderID);
