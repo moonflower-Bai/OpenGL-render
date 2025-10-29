@@ -2,16 +2,16 @@
 // Created by Jingren Bai on 25-7-15.
 //
 
-#include "TriangleRendering.h"
+#include "TriangleRender.h"
 
 #include <utility>
 #include "utils/log.cpp"
 
-std::vector<Vertex> TriangleRendering::getVertices() {
+std::vector<Vertex> TriangleRender::getVertices() {
 	return vertices;
 }
-void TriangleRendering::init() {
-	LOG_INFO << "TriangleRendering::init()";
+void TriangleRender::init() {
+	LOG_INFO << "TriangleRender::init()";
 	m_shader = Shader(m_vertexShaderPath, m_fragmentShaderPath);
 	m_shader.use();
 //	m_shader.setVec4("ourColor", color.x() / 255.0, color.y() / 255.0, color.z() / 255.0, color.w() / 255.0);
@@ -46,7 +46,7 @@ void TriangleRendering::init() {
 	glBindVertexArray(0);
 }
 
-void TriangleRendering::render() {
+void TriangleRender::render() {
 //	glUseProgram(programID);
 	m_shader.use();
 	m_texture.bind();
@@ -62,34 +62,34 @@ void TriangleRendering::render() {
 	glDrawArrays(GL_TRIANGLES, 0, vertices.size());
 }
 
-TriangleRendering::TriangleRendering(const std::vector<Vertex> vertices, std::string vertexShaderPath,
-									 std::string fragmentShaderPath, std::string texturePath){
+TriangleRender::TriangleRender(const std::vector<Vertex> vertices, std::string vertexShaderPath,
+							   std::string fragmentShaderPath, std::string texturePath){
 	setVertices(vertices);
 	setVertexShaderPath(vertexShaderPath);
 	setFragmentShaderPath(fragmentShaderPath);
 	setTexturePath(texturePath);
 }
 
-TriangleRendering::TriangleRendering() = default;
-void TriangleRendering::setVertices(std::vector<Vertex> vertices) {
+TriangleRender::TriangleRender() = default;
+void TriangleRender::setVertices(std::vector<Vertex> vertices) {
 	this->vertices = vertices;
 }
-void TriangleRendering::destroy(){
+void TriangleRender::destroy(){
 	glDeleteVertexArrays(1, &VAO);
 	glDeleteBuffers(1, &VBO);
 	glDeleteProgram(programID);
 }
-void TriangleRendering::setVertexShaderPath(std::string vertexShaderPath) {
+void TriangleRender::setVertexShaderPath(std::string vertexShaderPath) {
 	this->m_vertexShaderPath = std::move(vertexShaderPath);
 }
-void TriangleRendering::setFragmentShaderPath(std::string fragmentShaderPath) {
+void TriangleRender::setFragmentShaderPath(std::string fragmentShaderPath) {
 	this->m_fragmentShaderPath = std::move(fragmentShaderPath);
 }
 
-Shader* TriangleRendering::getShader() {
+Shader* TriangleRender::getShader() {
 	return &m_shader;
 }
 
-void TriangleRendering::setTexturePath(std::string texturePath) {
+void TriangleRender::setTexturePath(std::string texturePath) {
 	m_texturePath = texturePath;
 }

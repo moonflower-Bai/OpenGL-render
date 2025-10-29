@@ -2,22 +2,21 @@
 // Created by Jingren Bai on 25-7-15.
 //
 
-#ifndef LEARNOPENGL_TRIANGLERENDERING_H
-#define LEARNOPENGL_TRIANGLERENDERING_H
+#ifndef LEARNOPENGL_TRIANGLERENDER_H
+#define LEARNOPENGL_TRIANGLERENDER_H
 
-#include "ObjectRender.h"
+#include "Rendering/Primitives/Base/ObjectRender.h"
 #include "Shader/Shader.h"
 
-class TriangleRendering : public ObjectRender {
+class TriangleRender : public ObjectRender {
 private:
-//	Eigen::Matrix<float, 3, 3, Eigen::RowMajor> vertices;
 	std::string m_vertexShaderPath;
 	std::string m_fragmentShaderPath;
 	Texture m_texture;
 	Shader m_shader;
 public:
-	explicit TriangleRendering(const std::vector<Vertex> vertices, std::string vertexShaderPath, std::string fragmentShaderPath, std::string texturePath);
-	TriangleRendering();
+	explicit TriangleRender(const std::vector<Vertex> vertices, std::string vertexShaderPath, std::string fragmentShaderPath, std::string texturePath);
+	TriangleRender();
 	void setVertices(std::vector<Vertex> vertices);
 	std::vector<Vertex> getVertices();
 	void setVertexShaderPath(std::string vertexShaderPath);
@@ -32,4 +31,4 @@ public:
 };
 
 
-#endif //LEARNOPENGL_TRIANGLERENDERING_H
+#endif //LEARNOPENGL_TRIANGLERENDER_H

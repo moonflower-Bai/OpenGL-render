@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 #include <mutex>
-#include "Rendering/Primitives/ObjectRender.h"
+#include "Rendering/Primitives/Base/ObjectRender.h"
 
 class MainRenderThread {
 private: // 状态

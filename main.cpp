@@ -2,12 +2,12 @@
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
 #include "utils/log.cpp"
-#include "Rendering/Primitives/TriangleRendering.h"
+#include "Rendering/Primitives/Triangle/TriangleRender.h"
 #include "Rendering/Pipeline/MainRenderThread.h"
 #include "Extern/stb_image.h"
 #include "utils/getProgramPath.h"
 #include "Rendering/Scene/Camera.hpp"
-#include "Rendering/Primitives/PointRender.h"
+#include "Rendering/Primitives/Point/PointRender.h"
 
 #pragma comment(linker, "/STACK:1073741824")
 
@@ -100,18 +100,18 @@ int main(){
 		   45.0f, 800.0f / 600.0f, 0.1f, 100.0f);
 	for(int k = 0; k < positions.size(); k++){
 //	for(int k = 0; k < 2; k++){
-			auto tgr = std::make_unique<TriangleRendering>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
+			auto tgr = std::make_unique<TriangleRender>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
 			tgr->setPosition(Eigen::Vector4f(positions[k][0], positions[k][1], positions[k][2], 1.0));
 			tgr->setCamera(camera);
 			MainRenderThread::add(std::move(tgr));
 //		}
 	}
  */
-//	auto tmpT = std::make_unique<TriangleRendering>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
+//	auto tmpT = std::make_unique<TriangleRender>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tmpT));
-//	auto tgr1 = std::make_unique<TriangleRendering>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
+//	auto tgr1 = std::make_unique<TriangleRender>(m_vertices, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tgr1));
-//	auto tgr2 = std::make_unique<TriangleRendering>(vertices_2, vertexShaderPath, fragmentShaderPath, texturePath);
+//	auto tgr2 = std::make_unique<TriangleRender>(vertices_2, vertexShaderPath, fragmentShaderPath, texturePath);
 //	MainRenderThread::add(std::move(tgr2));
 //	Camera camera({0.0f, 0.0f, 3.0f}, {0.0f, 0.0f, 0.0f}, {0.0f, 1.0f, 0.0f},
 	Camera camera({0, 0, 3.0f}, {0.0f, 0.0f, 0.0f}, {0, 1, 0},
@@ -137,7 +137,7 @@ int main(){
 //		vertices.back().position = {vertices.back().position.x(), vertices.back().position.y(), vertices.back().position.z(), 20.0f};
 //		LOG_INFO << "PointRender::update()\n" << vertices.back().position << '\n';
 //	}
-//	auto tgr = std::make_unique<TriangleRendering>(vertices, pointVertexShaderPath, pointFragmentShaderPath, texturePath);
+//	auto tgr = std::make_unique<TriangleRender>(vertices, pointVertexShaderPath, pointFragmentShaderPath, texturePath);
 //	tgr->setPosition({0, 0, 0, 1});
 //	tgr->setCamera(camera);
 //	MainRenderThread::add(std::move(tgr));

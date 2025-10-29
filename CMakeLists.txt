@@ -23,14 +23,13 @@ include_directories(${PROJECT_SOURCE_DIR}/Extern)
 add_executable(LearnOpenGL main.cpp
         Extern/glad.cpp
         utils/log.cpp
-        Rendering/Primitives/TriangleRendering.cpp
-        Rendering/Primitives/TriangleRendering.h
+        Rendering/Primitives/Triangle/TriangleRender.cpp
+        Rendering/Primitives/Triangle/TriangleRender.h
         utils/ReadShader.cpp
         utils/ReadShader.h
         Rendering/Scene/Camera.cpp
         Rendering/Scene/Camera.hpp
-        Rendering/Primitives/ObjectRender.cpp
-        Rendering/Primitives/ObjectRender.h
+        Rendering/Primitives/Base/ObjectRender.h
         Rendering/Pipeline/MainRenderThread.cpp
         Rendering/Pipeline/MainRenderThread.h
         Shader/Shader.cpp
@@ -46,18 +45,19 @@ add_executable(LearnOpenGL main.cpp
         Rendering/Core/ResourceManager.h
         Rendering/Assets/ModelLoader.cpp
         Rendering/Assets/ModelLoader.h
-        Rendering/Primitives/RenderBuilder.cpp
-        Rendering/Primitives/RenderBuilder.h
         Rendering/Scene/Model.cpp
         Rendering/Scene/Model.h
         Rendering/Scene/Quaternions.cpp
         Rendering/Scene/Quaternions.h
-        Rendering/Primitives/PointRender.cpp
-        Rendering/Primitives/PointRender.h
+        Rendering/Primitives/Point/PointRender.cpp
+        Rendering/Primitives/Point/PointRender.h
         Rendering/Assets/fluid/FluidSimulator.cpp
         Rendering/Assets/fluid/FluidSimulator.h
         Rendering/Assets/fluid/Particle.cpp
         Rendering/Assets/fluid/Particle.h
+        Rendering/Primitives/Ball/BallRender.cpp
+        Rendering/Primitives/Ball/BallRender.h
+        Rendering/Primitives/Base/RenderConfig.h
         #        Input/InputSystem.cpp
 #        Input/InputSystem.h
 )
@@ -69,7 +69,7 @@ target_link_libraries(LearnOpenGL PRIVATE
 #        stb::stb_image
         $<$<BOOL:${UNIX}>:OpenGL::GL>  # 仅 Linux 添加
 )
-target_compile_options(LearnOpenGL PRIVATE /O2 /arch:AVX) # MSVC
+target_compile_options(LearnOpenGL PRIVATE /arch:AVX) # MSVC
 
 # 3. 智能处理 GTest 兼容性
 #if(TARGET GTest::Main)
@@ -81,7 +81,8 @@ target_compile_options(LearnOpenGL PRIVATE /O2 /arch:AVX) # MSVC
 add_executable(camera_test
         Rendering/Scene/Camera.cpp
         Rendering/Scene/Camera.hpp
-        unit_test/camera_test.cpp)
+        unit_test/camera_test.cpp
+        Rendering/Primitives/Base/RenderBuilder.h)
 
 #target_link_libraries(camera_test
 #        GTest::gtest
