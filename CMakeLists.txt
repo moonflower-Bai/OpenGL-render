@@ -90,5 +90,14 @@ add_executable(camera_test
 #        ${GTEST_MAIN_TARGET}  # 自动选择兼容的 target
 #)
 
+# ECS test executable
+add_executable(ecs_test
+        unit_test/ecs_test.cpp
+        Rendering/ECS/Entity.h
+        Rendering/ECS/Component.h
+        Rendering/ECS/TransformComponent.h
+        Rendering/Assets/fluid/GPU_process/GPU_FluidSimulator.h)
+
 enable_testing()
 add_test(NAME camera_test COMMAND camera_test)
+add_test(NAME ecs_test COMMAND ecs_test)
