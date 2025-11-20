@@ -2,31 +2,31 @@
 // Created by Jingren Bai on 25-8-3.
 //
 
-#include "MainRenderThread.h"
+#include "MainRenderThread_Primitive.h"
 #include "utils/log.cpp"
 
-MainRenderThread &MainRenderThread::instance() {
-	static MainRenderThread instance;
+MainRenderThread_Primitive &MainRenderThread_Primitive::instance() {
+	static MainRenderThread_Primitive instance;
 	return instance;
 }
-MainRenderThread::~MainRenderThread() {
+MainRenderThread_Primitive::~MainRenderThread_Primitive() {
 	stop();
 }
-void MainRenderThread::init(int width, int height){
+void MainRenderThread_Primitive::init(int width, int height){
 //	instance().initWindow(width, height);
 	instance().m_width = width;
 	instance().m_height = height;
 	instance().ensureRenderingStarted();
 }
-void MainRenderThread::ensureRenderingStarted(){
+void MainRenderThread_Primitive::ensureRenderingStarted(){
 	std::lock_guard<std::mutex> lock(m_mutex);
 	if(!m_renderingStarted && !renderPool.empty()){
 		m_renderingStarted = true;
-		m_renderThread = std::thread(&MainRenderThread::renderLoop, this);
+		m_renderThread = std::thread(&MainRenderThread_Primitive::renderLoop, this);
 		LOG_INFO << "started the main thread of render";
 	}
 }
-void MainRenderThread::initWindow(int width, int height) {
+void MainRenderThread_Primitive::initWindow(int width, int height) {
 	if(m_window) return;
 
 	glfwInit();
@@ -76,21 +76,23 @@ void MainRenderThread::initWindow(int width, int height) {
 //	glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
 	LOG_INFO << "Window initialized";
 }
-void MainRenderThread::add(std::unique_ptr<ObjectRender> object) {
+void MainRenderThread_Primitive::add(std::unique_ptr<ObjectRender> object) {
 	instance().addObject(std::move(object));
 }
-void MainRenderThread::addObject(std::unique_ptr<ObjectRender> object) {
+void MainRenderThread_Primitive::addObject(std::unique_ptr<ObjectRender> object) {
 	{
 		std::lock_guard<std::mutex> lock(m_mutex);
 		renderPool.push_back(std::move(object));
 	}
 	ensureRenderingStarted();
 }
-void MainRenderThread::renderLoop() {
+void MainRenderThread_Primitive::renderLoop() {
 	initWindow(m_width, m_height);
 	glfwMakeContextCurrent(m_window);
 	LOG_INFO << "Rendering loop started, m_stopRequested = " << m_stopRequested;
 	while(!m_stopRequested){
+//		glClearColor(0x66 / 255.0f, 0xcc / 255.0f, 1.0f, 1.0f);
+//		glClearColor(0.95, 0.64, 0.54,1.0);
 		{
 			std::lock_guard<std::mutex> lock(m_mutex);
 			processPendingObjects();
@@ -117,7 +119,7 @@ void MainRenderThread::renderLoop() {
 		m_objects.clear();
 	}
 }
-void MainRenderThread::processPendingObjects() {
+void MainRenderThread_Primitive::processPendingObjects() {
 	m_objects.insert(m_objects.end(),
 					 std::make_move_iterator(renderPool.begin()),
 					 std::make_move_iterator(renderPool.end()));
@@ -132,7 +134,7 @@ void MainRenderThread::processPendingObjects() {
 //		}
 	}
 }
-void MainRenderThread::stop() {
+void MainRenderThread_Primitive::stop() {
 	m_stopRequested = true;
 	LOG_INFO << "Stopping the main thread of render";
 	if(m_renderThread.joinable()){
@@ -144,7 +146,7 @@ void MainRenderThread::stop() {
 		m_window = nullptr;
 	}
 }
-void MainRenderThread::waitForExit() {
+void MainRenderThread_Primitive::waitForExit() {
 	if (m_renderThread.joinable()) {
 		m_renderThread.join();
 	}

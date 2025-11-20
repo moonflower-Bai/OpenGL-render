@@ -2,15 +2,15 @@
 // Created by Jingren Bai on 25-8-3.
 //
 
-#ifndef LEARNOPENGL_MAINRENDERTHREAD_H
-#define LEARNOPENGL_MAINRENDERTHREAD_H
+#ifndef LEARNOPENGL_MAINRENDERTHREAD_PRIMITIVE_H
+#define LEARNOPENGL_MAINRENDERTHREAD_PRIMITIVE_H
 
 #include <vector>
 #include <string>
 #include <mutex>
-#include "Rendering/Primitives/Base/ObjectRender.h"
+#include "Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h"
 
-class MainRenderThread {
+class MainRenderThread_Primitive {
 private: // 状态
 	GLFWwindow* m_window = nullptr;
 	int m_width, m_height;
@@ -27,16 +27,16 @@ private:
 	void processPendingObjects();
 	void addObject(std::unique_ptr<ObjectRender> object);
 public:
-	MainRenderThread() = default;
-	static MainRenderThread& instance();
+	MainRenderThread_Primitive() = default;
+	static MainRenderThread_Primitive& instance();
 	static void init(int, int);
 	static void add(std::unique_ptr<ObjectRender> object);
 	void ensureRenderingStarted();
 
-	~MainRenderThread();
+	~MainRenderThread_Primitive();
 
 	void waitForExit();
 };
 
 
-#endif //LEARNOPENGL_MAINRENDERTHREAD_H
+#endif //LEARNOPENGL_MAINRENDERTHREAD_PRIMITIVE_H
