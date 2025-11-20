@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_BALLRENDER_H
 #define LEARNOPENGL_BALLRENDER_H
 
-#include "Rendering/Primitives/Base/ObjectRender.h"
+#include "Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h"
 #include "Shader/Shader.h"
 #include "Rendering/Core/Texture.h"
 #include <cmath>
@@ -28,8 +28,8 @@ public:
 		m_shader = _shader;
 	}
 
-	[[nodiscard]] Shader getShader() {
-		return m_shader;
+	[[nodiscard]] Shader* getShader() {
+		return &m_shader;
 	}
 };
 

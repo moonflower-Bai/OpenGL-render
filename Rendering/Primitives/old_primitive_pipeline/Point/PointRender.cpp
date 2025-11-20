@@ -3,7 +3,7 @@
 //
 
 #include "PointRender.h"
-#include "Rendering/Assets/fluid/FluidSimulator.h"
+#include "Rendering/Assets/fluid/CPU_process/FluidSimulator.h"
 #include <windows.h>
 
 PointRender::PointRender(int particleNum, std::string vertexShaderPath, std::string fragmentShaderPath) {

@@ -5,8 +5,8 @@
 #ifndef LEARNOPENGL_POINTRENDER_H
 #define LEARNOPENGL_POINTRENDER_H
 
-#include "Rendering/Primitives/Base/ObjectRender.h"
-#include "Rendering/Assets/fluid/FluidSimulator.h"
+#include "Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h"
+#include "Rendering/Assets/fluid/CPU_process/FluidSimulator.h"
 #include "Shader/Shader.h"
 
 class PointRender : public ObjectRender {

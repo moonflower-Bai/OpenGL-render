@@ -15,6 +15,38 @@ void BallRender::init(){
 
 	m_shader.use();
 //	m_shader.setVec4("ourColor", color.x() / 255.0, color.y() / 255.0, color.z() / 255.0, color.w() / 255.0);
+
+//	m_shader.setVec3("lightPos", {5.0f, 5.0f, 5.0f});
+//	m_shader.setVec3("lightColor", {0.1f, 0.1f, 0.1f});
+	Eigen::Vector3f lightPositions[] = {
+			Eigen::Vector3f(-0.5f, 5.0f, -0.5f),
+			Eigen::Vector3f( 0.5f, 5.0f, -0.5f),
+			Eigen::Vector3f(-0.5f, 5.0f,  0.5f),
+			Eigen::Vector3f( 0.5f, 5.0f,  0.5f)
+	};
+
+// 假设所有光源都是白光且强度相同
+	Eigen::Vector3f lightColors[] = {
+			Eigen::Vector3f(0.1f, 0.1f, 0.1f),
+			Eigen::Vector3f(0.1f, 0.1f, 0.1f),
+			Eigen::Vector3f(0.1f, 0.1f, 0.1f),
+			Eigen::Vector3f(0.1f, 0.1f, 0.1f)
+	};
+	for (unsigned int i = 0; i < 4; i++)
+	{
+		// 设置光源位置
+		m_shader.setVec3("lightPositions[" + std::to_string(i) + "]", lightPositions[i]);
+		// 设置光源颜色
+		m_shader.setVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+	}
+
+	m_shader.setVec3("viewPos", {0.0f, 0.0f, 3.0f});
+	m_shader.setVec3("albedo", {0.722, 0.451, 0.200});
+
+	m_shader.setFloat("metallic", 1.0f);
+	m_shader.setFloat("roughness", 0.4f);
+	m_shader.setFloat("ao", 1.0f);
+
 	glGenVertexArrays(1, &VAO);
 	glGenBuffers(1, &VBO);
 	glBindVertexArray(VAO);
@@ -71,7 +103,7 @@ BallRender::BallRender(float radius, std::string vertexShaderPath, std::string f
 	this->radius = radius;
 	m_vertexShaderPath = vertexShaderPath;
 	m_fragmentShaderPath = fragmentShaderPath;
-	float step = 360.0f / 10;
+	float step = 360.0f / 100;
 
 	int stackCount = 180 / static_cast<int>(step) * 2;
 	int sliceCount = 360 / static_cast<int>(step);
@@ -97,7 +129,7 @@ BallRender::BallRender(float radius, std::string vertexShaderPath, std::string f
 			float v = phiDeg / 180.0f;
 
 			vertices.emplace_back(
-					Eigen::Vector4f(0.5f, 0.5f, 0.5f, 1.0f),  // color
+					Eigen::Vector4f(0x66 / 255.0f, 0xcc / 255.0f, 0xff / 255.0f, 1.0f),  // color
 					Eigen::Vector4f(x, y, z, 1.0f),           // position
 					Eigen::Vector2f(u, v)                     // texCoord
 			);

@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_TRIANGLERENDER_H
 #define LEARNOPENGL_TRIANGLERENDER_H
 
-#include "Rendering/Primitives/Base/ObjectRender.h"
+#include "Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h"
 #include "Shader/Shader.h"
 
 class TriangleRender : public ObjectRender {
