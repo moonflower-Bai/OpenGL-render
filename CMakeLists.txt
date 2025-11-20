@@ -2,6 +2,7 @@ cmake_minimum_required(VERSION 3.29)
 #set(VCPKG_MANIFEST_MODE OFF)
 project(LearnOpenGL)
 
+add_compile_definitions(_HAS_STD_BYTE=0)
 set(CMAKE_CXX_STANDARD 20)
 #set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -O2")
 #set(CMAKE_PREFIX_PATH "C:/Users/Jingren Bai/vcpkg/installed/x64-mingw-static;${CMAKE_PREFIX_PATH}")
@@ -21,17 +22,16 @@ include_directories(${PROJECT_SOURCE_DIR}/Extern)
 
 
 add_executable(LearnOpenGL main.cpp
-        Extern/glad.cpp
         utils/log.cpp
-        Rendering/Primitives/Triangle/TriangleRender.cpp
-        Rendering/Primitives/Triangle/TriangleRender.h
+        Rendering/Primitives/old_primitive_pipeline/Triangle/TriangleRender.cpp
+        Rendering/Primitives/old_primitive_pipeline/Triangle/TriangleRender.h
         utils/ReadShader.cpp
         utils/ReadShader.h
         Rendering/Scene/Camera.cpp
         Rendering/Scene/Camera.hpp
-        Rendering/Primitives/Base/ObjectRender.h
-        Rendering/Pipeline/MainRenderThread.cpp
-        Rendering/Pipeline/MainRenderThread.h
+        Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h
+        Rendering/Pipeline/MainRenderThread_Primitive.cpp
+        Rendering/Pipeline/MainRenderThread_Primitive.h
         Shader/Shader.cpp
         Shader/Shader.h
         Rendering/Core/Texture.cpp
@@ -49,28 +49,41 @@ add_executable(LearnOpenGL main.cpp
         Rendering/Scene/Model.h
         Rendering/Scene/Quaternions.cpp
         Rendering/Scene/Quaternions.h
-        Rendering/Primitives/Point/PointRender.cpp
-        Rendering/Primitives/Point/PointRender.h
-        Rendering/Assets/fluid/FluidSimulator.cpp
-        Rendering/Assets/fluid/FluidSimulator.h
-        Rendering/Assets/fluid/Particle.cpp
-        Rendering/Assets/fluid/Particle.h
-        Rendering/Primitives/Ball/BallRender.cpp
-        Rendering/Primitives/Ball/BallRender.h
-        Rendering/Primitives/Base/RenderConfig.h
-        Rendering/Primitives/Entity.cpp
-        Rendering/Primitives/Entity.h
-        Rendering/Primitives/Component.cpp
-        Rendering/Primitives/Component.h
+        Rendering/Primitives/old_primitive_pipeline/Point/PointRender.cpp
+        Rendering/Primitives/old_primitive_pipeline/Point/PointRender.h
+        Rendering/Assets/fluid/CPU_process/FluidSimulator.cpp
+        Rendering/Assets/fluid/CPU_process/FluidSimulator.h
+        Rendering/Assets/fluid/CPU_process/Particle.cpp
+        Rendering/Assets/fluid/CPU_process/Particle.h
+        Rendering/Primitives/old_primitive_pipeline/Ball/BallRender.cpp
+        Rendering/Primitives/old_primitive_pipeline/Ball/BallRender.h
+        Rendering/Primitives/old_primitive_pipeline/Base/RenderConfig.h
+        Rendering/Primitives/Entity/Entity.cpp
+        Rendering/Primitives/Entity/Entity.h
+        Rendering/Primitives/Components/Component.cpp
+        Rendering/Primitives/Components/Component.h
+        Rendering/Assets/fluid/GPU_process/GPU_FluidSimulator.cpp
+        Rendering/Assets/fluid/GPU_process/GPU_FluidSimulator.h
+        Rendering/Pipeline/RenderThread_ECS.cpp
+        Rendering/Pipeline/RenderThread_ECS.h
+        Extern/include/glad/glad.h
+        Extern/include/KHR/khrplatform.h
+        Extern/src/glad.c
+        Rendering/Assets/fluid/GPU_process/GPU_FluidRender.cpp
+        Rendering/Assets/fluid/GPU_process/GPU_FluidRender.h
+        Rendering/Assets/fluid/GPU_process/GPU_Particle.h
+        Rendering/Primitives/Components/CameraComponent.cpp
+        Rendering/Primitives/Components/CameraComponent.h
+        Rendering/Primitives/Entity/CameraEntity.cpp
+        Rendering/Primitives/Entity/CameraEntity.h
+        Extern/json.hpp
         #        Input/InputSystem.cpp
 #        Input/InputSystem.h
 )
 
-
 target_link_libraries(LearnOpenGL PRIVATE
         glfw
-        glm::glm
-#        stb::stb_image
+        opengl32  # Windows 下需要显式链接
         $<$<BOOL:${UNIX}>:OpenGL::GL>  # 仅 Linux 添加
 )
 target_compile_options(LearnOpenGL PRIVATE /arch:AVX) # MSVC
@@ -86,7 +99,7 @@ add_executable(camera_test
         Rendering/Scene/Camera.cpp
         Rendering/Scene/Camera.hpp
         unit_test/camera_test.cpp
-        Rendering/Primitives/Base/RenderBuilder.h)
+        Rendering/Primitives/old_primitive_pipeline/Base/RenderBuilder.h)
 
 #target_link_libraries(camera_test
 #        GTest::gtest

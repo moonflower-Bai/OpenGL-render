@@ -1,0 +1,108 @@
+#version 450 core
+#include "fluidCommon.glsl"
+
+///////////////////////////////////////////
+// 预定义 27 个邻域偏移 - 与 Lambda 保持一致
+///////////////////////////////////////////
+const ivec3 NEIGHBOR_OFFSETS[27] = ivec3[27](
+ivec3(-1,-1,-1), ivec3(0,-1,-1), ivec3(1,-1,-1),
+ivec3(-1, 0,-1), ivec3(0, 0,-1), ivec3(1, 0,-1),
+ivec3(-1, 1,-1), ivec3(0, 1,-1), ivec3(1, 1,-1),
+
+ivec3(-1,-1, 0), ivec3(0,-1, 0), ivec3(1,-1, 0),
+ivec3(-1, 0, 0), ivec3(0, 0, 0), ivec3(1, 0, 0),
+ivec3(-1, 1, 0), ivec3(0, 1, 0), ivec3(1, 1, 0),
+
+ivec3(-1,-1, 1), ivec3(0,-1, 1), ivec3(1,-1, 1),
+ivec3(-1, 0, 1), ivec3(0, 0, 1), ivec3(1, 0, 1),
+ivec3(-1, 1, 1), ivec3(0, 1, 1), ivec3(1, 1, 1)
+);
+
+layout (local_size_x = 256) in;
+
+void main() {
+    uint i = gl_GlobalInvocationID.x;
+    if (i >= uint(numParticles)) return;
+
+    ////////////////////////////////
+    // 本线程一次 SSBO 读
+    ////////////////////////////////
+    Particle p = particles[i];
+    vec3 pos_i = p.pos.xyz;
+    float lambda_i = p.lambda;
+
+    ////////////////////////////////
+    // 局部缓存（避免重复计算）
+    ////////////////////////////////
+    vec3 posDelta = vec3(0.0);
+    float neighbourR2 = neighbourRadius * neighbourRadius;
+    float invRho = 1.0 / rho;   // 多次使用，提前缓存
+
+    // scorr 的参考值（CPU 相同）
+    float ref_poly6 = poly6(0.33 * h);
+    float inv_ref_poly6 = (ref_poly6 > 0.0) ? (1.0 / ref_poly6) : 0.0;
+
+    ivec3 cell = getCell(pos_i);
+
+    ////////////////////////////////
+    // 遍历 27 个 cell（预定义 offsets）
+    ////////////////////////////////
+    for (int oi = 0; oi < 27; ++oi) {
+        ivec3 nc = cell + NEIGHBOR_OFFSETS[oi];
+        if (!isInRange(nc)) continue;
+
+        uint cellIdx = cellToIndex(nc);
+        uint count = cellCounts[cellIdx];
+        if (count == 0u) continue;
+
+        uint base = cellIdx * uint(maxNeighboursPerCell);
+
+        ////////////////////////////////
+        // 遍历 cell 内的邻居
+        ////////////////////////////////
+        for (uint k = 0u; k < count; ++k) {
+            uint j = cellParticleIndices[base + k];
+            if (j == i) continue;
+
+            // 一次 SSBO 读 j 粒子
+            Particle q = particles[j];
+            vec3 pos_j = q.pos.xyz;
+
+            vec3 s = pos_i - pos_j;
+            float r2 = dot(s, s);
+            if (r2 <= 0.0 || r2 >= neighbourR2) continue;
+
+            float r = sqrt(r2);
+
+            ////////////////////////////////
+            // scorr（外观平滑项）
+            ////////////////////////////////
+            float scorr = 0.0;
+            if (inv_ref_poly6 > 0.0) {
+                float t = poly6(r) * inv_ref_poly6;
+                float t2 = t * t;
+                float t4 = t2 * t2;
+                scorr = -0.001 * t4;
+            }
+
+            ////////////////////////////////
+            // 贡献 Δp
+            ////////////////////////////////
+            vec3 grad = spikyGradient(s, r);
+            posDelta += (lambda_i + q.lambda + scorr) * grad;
+        }
+    }
+
+    ////////////////////////////////
+    // 最终 Δp_i
+    ////////////////////////////////
+    posDelta *= invRho;
+
+    p.pos.xyz += posDelta;
+    p.pos.xyz = confine(p.pos.xyz);
+
+    ////////////////////////////////
+    // 一次 SSBO 写回
+    ////////////////////////////////
+    particles[i] = p;
+}

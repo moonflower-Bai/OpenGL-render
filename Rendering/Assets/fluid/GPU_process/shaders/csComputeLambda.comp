@@ -1,0 +1,91 @@
+#version 450 core
+#include "fluidCommon.glsl"
+
+// 预定义 27 个邻居偏移，减少三重 for 和整数加法
+const ivec3 NEIGHBOR_OFFSETS[27] = ivec3[27](
+ivec3(-1,-1,-1), ivec3(0,-1,-1), ivec3(1,-1,-1),
+ivec3(-1, 0,-1), ivec3(0, 0,-1), ivec3(1, 0,-1),
+ivec3(-1, 1,-1), ivec3(0, 1,-1), ivec3(1, 1,-1),
+
+ivec3(-1,-1, 0), ivec3(0,-1, 0), ivec3(1,-1, 0),
+ivec3(-1, 0, 0), ivec3(0, 0, 0), ivec3(1, 0, 0),
+ivec3(-1, 1, 0), ivec3(0, 1, 0), ivec3(1, 1, 0),
+
+ivec3(-1,-1, 1), ivec3(0,-1, 1), ivec3(1,-1, 1),
+ivec3(-1, 0, 1), ivec3(0, 0, 1), ivec3(1, 0, 1),
+ivec3(-1, 1, 1), ivec3(0, 1, 1), ivec3(1, 1, 1)
+);
+
+layout (local_size_x = 256) in;
+
+void main() {
+    uint i = gl_GlobalInvocationID.x;
+    if (i >= uint(numParticles)) return;
+
+    // 一次性读出粒子，后面全用局部变量，减少 SSBO 访问次数
+    Particle p = particles[i];
+    vec3 pos_i = p.pos.xyz;
+
+    float densityConstraint = 0.0;
+    vec3 grad_i = vec3(0.0);
+    float sumSqrGrad = 0.0;
+
+    // 预计算常量，减少循环内部重复计算
+    float neighbourR2 = neighbourRadius * neighbourRadius;
+    float invRho = mass / rho;   // 直接 mass/rho，和 CPU 公式一致
+
+    ivec3 cell = getCell(pos_i);
+
+    // 遍历 27 个邻居 cell（用预定义 offset 数组，分支更少）
+    for (int oi = 0; oi < 27; ++oi) {
+        ivec3 nc = cell + NEIGHBOR_OFFSETS[oi];
+        if (!isInRange(nc)) {
+            continue;
+        }
+
+        uint cellIdx = cellToIndex(nc);
+        uint count   = cellCounts[cellIdx];
+        if (count == 0u) {
+            continue;
+        }
+
+        uint base = cellIdx * uint(maxNeighboursPerCell);
+
+        // 遍历当前 cell 内的所有粒子
+        for (uint k = 0u; k < count; ++k) {
+            uint j = cellParticleIndices[base + k];
+            if (j == i) continue;
+
+            Particle q = particles[j];
+            vec3 pos_j = q.pos.xyz;
+
+            vec3 s = pos_i - pos_j;
+            float r2 = dot(s, s);
+
+            // 合并条件判断，减少分支
+            if (r2 <= 0.0 || r2 >= neighbourR2) {
+                continue;
+            }
+
+            float r = sqrt(r2);
+
+            // 这里假设 poly6 / spikyGradient 仍以 r 为输入
+            float w = poly6(r);
+            vec3 grad = spikyGradient(s, r);
+
+            densityConstraint += w;
+            grad_i            += grad;
+            sumSqrGrad        += dot(grad, grad);
+        }
+    }
+
+    // 对应 CPU 中 p.density = (mass * densityConstraint / rho) - 1
+    float C = invRho * densityConstraint - 1.0;
+    p.density = C;
+
+    sumSqrGrad += dot(grad_i, grad_i);
+    p.lambda = -C / (sumSqrGrad + lambdaEpsilon);
+
+    // 一次性写回
+    particles[i] = p;
+}

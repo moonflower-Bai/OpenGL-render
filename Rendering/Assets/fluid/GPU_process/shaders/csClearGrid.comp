@@ -1,0 +1,14 @@
+#version 450 core
+
+#include "fluidCommon.glsl"
+
+layout (local_size_x = 256) in;
+
+void main() {
+    uint idx = gl_GlobalInvocationID.x; // 获取并行任务的全局索引
+
+    uint totalCells = uint(gridSize.x * gridSize.y * gridSize.z);
+    if (idx >= totalCells) return;
+
+    cellCounts[idx] = 0u;
+}

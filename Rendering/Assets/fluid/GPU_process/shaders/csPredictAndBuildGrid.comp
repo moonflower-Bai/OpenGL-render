@@ -1,0 +1,42 @@
+#version 450 core
+
+#include "fluidCommon.glsl"
+
+layout (local_size_x = 256) in;
+
+void main() {
+    uint i = gl_GlobalInvocationID.x;
+    if (i >= uint(numParticles)) return;
+//    if (i >= NUM_PARTICLES) return;
+
+    Particle p = particles[i];
+
+    // 记录旧位置
+    p.oldPos.xyz = p.pos.xyz;
+
+    // 重力
+    vec3 g = vec3(0.0, -9.8, 0.0);
+    p.vel.xyz += g * dt;
+
+    // 预测新位置
+    p.pos.xyz += p.vel.xyz * dt;
+    p.pos.xyz = confine(p.pos.xyz);
+
+    // 写回粒子
+    particles[i] = p;
+
+    // 将粒子插入网格
+    ivec3 cell = getCell(p.pos.xyz);
+    if (!isInRange(cell)) return;
+
+    uint cellIdx = cellToIndex(cell);
+
+    // 原子操作，获得当前 cell 中我们要写入的位置
+    uint offset = atomicAdd(cellCounts[cellIdx], 1u);
+
+    if (offset >= uint(maxNeighboursPerCell))
+    return; // 溢出就丢弃（可以之后改成 debug 统计）
+
+    uint flatIndex = cellIdx * uint(maxNeighboursPerCell) + offset;
+    cellParticleIndices[flatIndex] = i;
+}
