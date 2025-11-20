@@ -6,7 +6,7 @@
 #define LEARNOPENGL_VERTEX_H
 
 #include <Eigen/Eigen>
-#include "Rendering/Assets/fluid/Particle.h"
+#include "Rendering/Assets/fluid/CPU_process/Particle.h"
 
 struct alignas(16) Vertex {
 	Vertex() = default;

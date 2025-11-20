@@ -7,14 +7,19 @@
 
 #include "utils/log.cpp"
 #include <fstream>
+#include <map>
 
 class ReadShader {
 private:
-	std::string shader;
+
+	std::string processShader(const std::string& path);
+	std::string shaderSource;
+	static std::map<std::string, std::string> includeCache; // 全局缓存已加载的文件
 public:
-	ReadShader(const char* path);
-	ReadShader(std::string path);
-	char *getShader() const;
+	ReadShader(const std::string &path);
+	const char *getShader() const;
+
+	static std::string readFile(const std::string &path);
 };
 
 

@@ -36,6 +36,8 @@ public:
 	std::string getVertexPath();
 	std::string getFragmentPath();
 	unsigned int getProgramID();
+	// Transfer ownership of the internal program id (sets internal id to 0)
+	unsigned int takeProgramID();
 };
 
 
