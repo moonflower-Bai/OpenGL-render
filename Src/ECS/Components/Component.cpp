@@ -3,7 +3,7 @@
 //
 
 #include "Component.h"
-#include "Src/Rendering/Pipeline/RenderThread_ECS.h"
+#include "Rendering/Pipeline/RenderThread_ECS.h"
 
 TransformComponent::TransformComponent(Eigen::Vector4f position, Quaternions rotation, Eigen::Vector4f scale)
 	: m_position(position), m_rotation(rotation), m_scale(scale) {}

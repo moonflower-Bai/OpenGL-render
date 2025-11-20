@@ -5,7 +5,7 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 #include <vector>
 
 class Particle {

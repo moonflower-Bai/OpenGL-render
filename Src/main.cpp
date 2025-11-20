@@ -1,17 +1,17 @@
-﻿#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glm/glm.hpp"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glm/gtc/matrix_transform.hpp"
+﻿#include <Eigen/Eigen>
+#include <glm/glm.hpp>
+#include <glm/gtc/matrix_transform.hpp>
 #include "utils/log.cpp"
 //#include "Rendering/Primitives/Triangle/TriangleRender.h"
 //#include "Rendering/Pipeline/MainRenderThread_Primitive.h"
-#include "Extern/stb_image.h"
+#include <stb_image.h>
 #include "utils/getProgramPath.h"
 #include "Rendering/Scene/Camera.hpp"
 //#include "Rendering/Primitives/Point/PointRender.h"
 //#include "Rendering/Primitives/Ball/BallRender.h"
 #include "Rendering/Pipeline/RenderThread_ECS.h"
-#include "Rendering/Primitives/Entity/Entity.h"
-#include "Rendering/Primitives/Components/Component.h"
+#include "ECS/Entity/Entity.h"
+#include "ECS/Components/Component.h"
 #include "Rendering/Assets/fluid/GPU_process/GPU_FluidSimulator.h"
 #include "Rendering/Assets/fluid/GPU_process/GPU_FluidRender.h"
 

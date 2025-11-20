@@ -33,7 +33,7 @@ public:
 
 	void MapkeyToAction(int key, InputAction action);
 
-	static
+//	static
 };
 
 

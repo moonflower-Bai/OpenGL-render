@@ -4,12 +4,13 @@
 
 #ifndef LEARNOPENGL_TEXTURE_H
 #define LEARNOPENGL_TEXTURE_H
-
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/GLFW/glfw3.h"
 #include <string>
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+#include <stb_image.h>
+
 #include "utils/getProgramPath.h"
-#include "Extern/stb_image.h"
 
 class Texture {
 private:

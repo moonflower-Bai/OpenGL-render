@@ -43,3 +43,10 @@ target_link_libraries(LearnOpenGL PRIVATE
         opengl32
         $<$<BOOL:${UNIX}>:OpenGL::GL>
 )
+
+# Copy shaders directory after build
+add_custom_command(TARGET LearnOpenGL POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E copy_directory
+        ${PROJECT_SOURCE_DIR}/Src/Rendering/Assets/fluid/GPU_process/shaders
+        $<TARGET_FILE_DIR:LearnOpenGL>/shaders
+)

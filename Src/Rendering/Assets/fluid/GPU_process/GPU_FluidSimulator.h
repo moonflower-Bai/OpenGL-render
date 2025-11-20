@@ -4,13 +4,15 @@
 
 #ifndef LEARNOPENGL_GPU_FLUIDSIMULATOR_H
 #define LEARNOPENGL_GPU_FLUIDSIMULATOR_H
-
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+// C++ Headers
 #include <vector>
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/GLFW/glfw3.h"
+// External Headers
+#include <Eigen/Eigen>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+// Internal Headers
 #include "utils/ReadShader.h"
-#include "Src/Rendering/Primitives/Components/Component.h"
+#include "ECS/Components/Component.h"
 #include "GPU_Particle.h"
 
 //struct GPUFluidParams {

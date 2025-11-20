@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_CAMERA_HPP
 #define LEARNOPENGL_CAMERA_HPP
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 
 class Camera {
 private:

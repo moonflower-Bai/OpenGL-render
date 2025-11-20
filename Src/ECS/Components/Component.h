@@ -5,11 +5,11 @@
 #ifndef LEARNOPENGL_COMPONENT_H
 #define LEARNOPENGL_COMPONENT_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 #include <optional>
 #include <iostream>
 
-#include "Src/Rendering/Scene/Quaternions.h"
+#include "Rendering/Scene/Quaternions.h"
 
 class Entity;
 class RenderThread_ECS;

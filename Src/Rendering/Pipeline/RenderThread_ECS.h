@@ -10,10 +10,12 @@
 #include <mutex>
 #include <thread>
 #include <memory>
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/GLFW/glfw3.h"
+
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "utils/log.cpp"
-#include "Src/Rendering/Primitives/Entity/Entity.h"
+#include "ECS/Entity/Entity.h"
 
 class Entity;
 

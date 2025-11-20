@@ -8,7 +8,7 @@
 #include <vector>
 #include <string>
 #include <mutex>
-#include "Src/Rendering/Primitives/old_primitive_pipeline/Base/ObjectRender.h"
+#include "Rendering/old_primitive_pipeline/Base/ObjectRender.h"
 
 class MainRenderThread_Primitive {
 private: // 状态

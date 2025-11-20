@@ -9,5 +9,8 @@ add_library(Core ${CORE_SRC})
 
 target_include_directories(Core PUBLIC
         ${CORE_DIR}
-        ${EXTERN_DIR}
+        ${PROJECT_SOURCE_DIR}/Src          # 允许 include "Rendering/xxx.h"
+        ${PROJECT_SOURCE_DIR}/Extern
+        ${PROJECT_SOURCE_DIR}/Extern/include
+        ${PROJECT_BINARY_DIR}/vcpkg_installed/x64-windows/include  # glm / eigen
 )

@@ -8,6 +8,17 @@ std::string getProgramPath() {
 
 #ifdef _WIN32
 	GetModuleFileNameA(NULL, buffer, sizeof(buffer));
+
+	// 转成 std::string 好处理
+	std::string fullPath(buffer);
+
+	// 找最后一个反斜杠（路径分隔）
+	size_t pos = fullPath.find_last_of("\\/");
+	if (pos != std::string::npos) {
+		return fullPath.substr(0, pos);  // 返回目录部分
+	}
+
+	return fullPath; // 不太可能走到这里
 #elif __APPLE__
 	uint32_t size = sizeof(buffer);
     if (_NSGetExecutablePath(buffer, &size) == 0) {

@@ -7,7 +7,7 @@
 
 #include <unordered_map>
 #include <string>
-#include "src/Shader/Shader.h"
+#include "Rendering/Shader/Shader.h"
 #include "Texture.h"
 
 class ResourceManager {

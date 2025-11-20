@@ -5,14 +5,16 @@
 #ifndef LEARNOPENGL_OBJECTRENDER_H
 #define LEARNOPENGL_OBJECTRENDER_H
 
-#include "cmake-build-release-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
-#include "cmake-build-release-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
-#include "cmake-build-release-visual-studio/vcpkg_installed/x64-windows/include/GLFW/glfw3.h"
 #include <string>
-#include "Rendering/Core/Vertex.h"
-#include "Rendering/Core/Texture.h"
-#include "Src/Rendering/Scene/Camera.hpp"
-#include "Src/Rendering/Scene/Model.h"
+
+#include <Eigen/Eigen>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
+#include "Core/Vertex.h"
+#include "Core/Texture.h"
+#include "Rendering/Scene/Camera.hpp"
+#include "Rendering/Scene/Model.h"
 
 class ObjectRender {
 protected:

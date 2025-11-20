@@ -2,9 +2,10 @@
 // Created by Jingren Bai on 25-9-9.
 //
 
-#include "PointRender.h"
-#include "Src/Rendering/Assets/fluid/CPU_process/FluidSimulator.h"
 #include <windows.h>
+
+#include "PointRender.h"
+#include "Rendering/Assets/fluid/CPU_process/FluidSimulator.h"
 
 PointRender::PointRender(int particleNum, std::string vertexShaderPath, std::string fragmentShaderPath) {
 	LOG_INFO << "PointRender::PointRender()";

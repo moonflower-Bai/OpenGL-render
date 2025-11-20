@@ -2,20 +2,20 @@
 // Created by Jingren Bai on 25-11-12.
 //
 
+#include <fstream>
+
+#include "utils/log.cpp"
+#include "utils/getProgramPath.h"
+#include "Shader/Shader.h"
+#include "ECS/Entity/Entity.h"
+#include "Rendering/Pipeline/RenderThread_ECS.h"
 #include "GPU_FluidRender.h"
 #include "GPU_FluidSimulator.h"
-#include "utils/log.cpp"
-#include "Src/Shader/Shader.h"
-#include "utils/getProgramPath.h"
-#include <fstream>
-#include <sstream>
-#include "Src/Rendering/Primitives/Entity/Entity.h"
-#include "Src/Rendering/Pipeline/RenderThread_ECS.h"
 
 GLuint GPU_FluidRender::createShaderProgram(const std::string& vertPath, const std::string& fragPath) {
-	std::string projectRoot = getProjectPath();
-	std::string vertexFullPath = projectRoot + "/" + vertPath;
-	std::string fragmentFullPath = projectRoot + "/" + fragPath;
+	std::string projectRoot = getProgramPath();
+	std::string vertexFullPath = projectRoot + "/shaders/" + vertPath;
+	std::string fragmentFullPath = projectRoot + "/shaders/" + fragPath;
 	m_shader = Shader(vertexFullPath, fragmentFullPath);
 	// Transfer ownership of the created program to caller to avoid deletion in Shader::~Shader()
 	GLuint program = m_shader.getProgramID();
@@ -81,8 +81,8 @@ bool GPU_FluidRender::ensureInitialized() {
 
 	// Create shader program
 	m_renderProgram = createShaderProgram(
-		"Rendering/Assets/fluid/GPU_process/shaders/fluid_render.vert",
-		"Rendering/Assets/fluid/GPU_process/shaders/fluid_render.frag"
+		"fluid_render.vert",
+		"fluid_render.frag"
 	);
 	if (!m_renderProgram) {
 		LOG_ERROR << "[GPU_FluidRender] Failed to create render shader program.";

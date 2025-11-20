@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_MODEL_H
 #define LEARNOPENGL_MODEL_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 #include <optional>
 
 #include "Quaternions.h"

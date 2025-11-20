@@ -4,11 +4,11 @@
 
 #ifndef LEARNOPENGL_BALLRENDER_H
 #define LEARNOPENGL_BALLRENDER_H
-
-#include "Src/Rendering/old_primitive_pipeline/Base/ObjectRender.h"
-#include "Src/Shader/Shader.h"
-#include "Rendering/Core/Texture.h"
 #include <cmath>
+
+#include "Rendering/old_primitive_pipeline/Base/ObjectRender.h"
+#include "Shader/Shader.h"
+#include "Core/Texture.h"
 
 class BallRender : public ObjectRender {
 private:

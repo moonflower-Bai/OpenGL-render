@@ -5,8 +5,9 @@
 #ifndef LEARNOPENGL_GPU_PARTICLE_H
 #define LEARNOPENGL_GPU_PARTICLE_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
 #include <vector>
+
+#include <Eigen/Eigen>
 
 struct GPU_Particle {
 	GPU_Particle() = default;

@@ -7,9 +7,9 @@
 #include <sstream>
 #include <mutex>
 #include <cstring>
-
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glm/glm.hpp"
 #include <chrono>
+
+#include <glm/glm.hpp>
 
 // 单独支持vec3, ivec3, mat4三种类型的<<重载
 inline std::ostream& operator<<(std::ostream& os, const glm::vec3& v) {

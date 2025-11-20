@@ -9,7 +9,7 @@
 #include <memory>
 #include <typeindex>
 #include <unordered_map>
-#include "Src/ECS/Components/Component.h"
+#include "ECS/Components/Component.h"
 
 class Entity : public std::enable_shared_from_this<Entity> {
 private:

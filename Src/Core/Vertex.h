@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_VERTEX_H
 #define LEARNOPENGL_VERTEX_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 #include "Rendering/Assets/fluid/CPU_process/Particle.h"
 
 struct alignas(16) Vertex {

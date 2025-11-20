@@ -5,7 +5,7 @@
 #ifndef LEARNOPENGL_QUATERNIONS_H
 #define LEARNOPENGL_QUATERNIONS_H
 
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+#include <Eigen/Eigen>
 
 class Quaternions {
 private:

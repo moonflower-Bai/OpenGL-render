@@ -6,8 +6,9 @@
 #include "GPU_FluidSimulator.h"
 #include "utils/getProgramPath.h"
 
-GLuint GPU_FluidSimulator::createComputeShaderProgram(const std::string& path)
+GLuint GPU_FluidSimulator::createComputeShaderProgram(const std::string& file)
 {
+	std::string path = getProgramPath() + "/shaders/" + file;
 	// 1. 读取文件
 	ReadShader rs(path.c_str());
 	const char* src = rs.getShader();
@@ -131,11 +132,11 @@ void GPU_FluidSimulator::onStart() {
 
 	// 创建 compute shader 程序
 	std::string projectRoot = getProjectPath();
-	clearGridProgram = createComputeShaderProgram(projectRoot + "/Rendering/Assets/fluid/GPU_process/shaders/csClearGrid.comp");
-	predictAndBuildGridProgram = createComputeShaderProgram(projectRoot + "/Rendering/Assets/fluid/GPU_process/shaders/csPredictAndBuildGrid.comp");
-	computeLambdaProgram = createComputeShaderProgram(projectRoot + "/Rendering/Assets/fluid/GPU_process/shaders/csComputeLambda.comp");
-	computeDeltaProgram = createComputeShaderProgram(projectRoot + "/Rendering/Assets/fluid/GPU_process/shaders/csComputeDeltaAndApply.comp");
-	epilogueProgram = createComputeShaderProgram(projectRoot + "/Rendering/Assets/fluid/GPU_process/shaders/csEpilogue.comp");
+	clearGridProgram = createComputeShaderProgram("csClearGrid.comp");
+	predictAndBuildGridProgram = createComputeShaderProgram("csPredictAndBuildGrid.comp");
+	computeLambdaProgram = createComputeShaderProgram("csComputeLambda.comp");
+	computeDeltaProgram = createComputeShaderProgram("csComputeDeltaAndApply.comp");
+	epilogueProgram = createComputeShaderProgram("csEpilogue.comp");
 }
 
 void GPU_FluidSimulator::uploadParams() {

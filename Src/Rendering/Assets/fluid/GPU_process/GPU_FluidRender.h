@@ -5,11 +5,13 @@
 #ifndef LEARNOPENGL_GPU_FLUIDRENDER_H
 #define LEARNOPENGL_GPU_FLUIDRENDER_H
 
-#include "Src/Rendering/Primitives/Components/Component.h"
-#include "Src/Shader/Shader.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
 #include <string>
 #include <memory>
+
+#include <glad/glad.h>
+
+#include "ECS/Components/Component.h"
+#include "Shader/Shader.h"
 
 class GPU_FluidRender : public Component{
 private:

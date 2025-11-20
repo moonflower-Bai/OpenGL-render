@@ -6,9 +6,11 @@
 #define LEARNOPENGL_SHADER_H
 
 #include <string>
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/glad/glad.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/GLFW/glfw3.h"
-#include "cmake-build-debug-visual-studio/vcpkg_installed/x64-windows/include/Eigen/Eigen"
+
+#include <Eigen/Eigen>
+#include <glad/glad.h>
+#include <GLFW/glfw3.h>
+
 #include "utils/ReadShader.h"
 
 class Shader {
