@@ -6,9 +6,9 @@
   <component name="CMakeWorkspace" PROJECT_DIR="$PROJECT_DIR$" />
   <component name="CidrRootsConfiguration">
     <sourceRoots>
-      <file path="$PROJECT_DIR$/Rendering" />
-      <file path="$PROJECT_DIR$/Shader" />
-      <file path="$PROJECT_DIR$/utils" />
+      <file path="$PROJECT_DIR$/Src" />
+      <file path="$PROJECT_DIR$/Src/Rendering" />
+      <file path="$PROJECT_DIR$/Src/Utils" />
     </sourceRoots>
     <libraryRoots>
       <file path="$PROJECT_DIR$/Extern" />

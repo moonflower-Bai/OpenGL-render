@@ -78,11 +78,11 @@ LearnOpenGL/
 详细的开发文档请参阅 [Doc](Doc) 目录：
 
 - [开发指南](Doc/DevelopmentGuide.md) - 项目概述和整体架构
-- [渲染管线](Doc/Pipeline.md) - 渲染核心逻辑
-- [基本图元](Doc/Primitives.md) - 可渲染对象实现
-- [着色器系统](Doc/Shader.md) - 着色器管理
-- [核心组件](Doc/Core.md) - 基础数据结构
-- [流体模拟](Doc/Fluid.md) - PBF算法实现
+- [渲染管线](Doc/Architecture/Pipeline.md) - 渲染核心逻辑
+- [基本图元](Doc/Architecture/Primitives.md) - 可渲染对象实现
+- [着色器系统](Doc/Architecture/Shader.md) - 着色器管理
+- [核心组件](Doc/Architecture/Core.md) - 基础数据结构
+- [流体模拟](Doc/Architecture/Fluid.md) - PBF算法实现
 
 ## 使用示例
 
