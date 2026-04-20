@@ -5,7 +5,11 @@
 #ifndef LEARNOPENGL_QUATERNIONS_H
 #define LEARNOPENGL_QUATERNIONS_H
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 
 class Quaternions {
 private:

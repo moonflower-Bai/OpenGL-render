@@ -19,6 +19,8 @@
 //}
 #version 450 core
 layout (location = 0) in vec4 aPos;
+layout (location = 1) in vec4 aVel;
+layout (location = 2) in float density;
 out vec3 vColor;
 
 void main() {
@@ -44,5 +46,6 @@ void main() {
 
     gl_Position = vec4(p, 1.0);
     gl_PointSize = 3.0;
-    vColor = p;
+    float color = density * 10;
+    vColor = vec3(density, 0.0, 1.0 - density); // 根据密度着色
 }

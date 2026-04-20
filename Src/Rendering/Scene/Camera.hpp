@@ -5,7 +5,11 @@
 #ifndef LEARNOPENGL_CAMERA_HPP
 #define LEARNOPENGL_CAMERA_HPP
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 
 class Camera {
 private:

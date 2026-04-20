@@ -5,6 +5,7 @@
 #ifndef LEARNOPENGL_RENDERTHREAD_ECS_H
 #define LEARNOPENGL_RENDERTHREAD_ECS_H
 
+#include <condition_variable>
 #include <vector>
 #include <string>
 #include <mutex>
@@ -14,7 +15,7 @@
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
-#include "utils/log.cpp"
+#include "Utils/log.cpp"
 #include "ECS/Entity/Entity.h"
 
 class Entity;

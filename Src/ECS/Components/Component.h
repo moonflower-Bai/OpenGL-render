@@ -5,9 +5,14 @@
 #ifndef LEARNOPENGL_COMPONENT_H
 #define LEARNOPENGL_COMPONENT_H
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 #include <optional>
 #include <iostream>
+#include <memory>
 
 #include "Rendering/Scene/Quaternions.h"
 

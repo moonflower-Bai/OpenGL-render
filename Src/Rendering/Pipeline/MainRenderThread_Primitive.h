@@ -5,6 +5,7 @@
 #ifndef LEARNOPENGL_MAINRENDERTHREAD_PRIMITIVE_H
 #define LEARNOPENGL_MAINRENDERTHREAD_PRIMITIVE_H
 
+#include <thread>
 #include <vector>
 #include <string>
 #include <mutex>

@@ -4,8 +4,8 @@
 
 #include <fstream>
 
-#include "utils/log.cpp"
-#include "utils/getProgramPath.h"
+#include "Utils/log.cpp"
+#include "Utils/getProgramPath.h"
 #include "Shader/Shader.h"
 #include "ECS/Entity/Entity.h"
 #include "Rendering/Pipeline/RenderThread_ECS.h"
@@ -97,6 +97,11 @@ bool GPU_FluidRender::ensureInitialized() {
 	glBindBuffer(GL_ARRAY_BUFFER, particleSSBO);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(GPU_Particle), (void*)0);
 	glEnableVertexAttribArray(0);
+	glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(GPU_Particle), (void*)(offsetof(GPU_Particle, vel)));
+	glEnableVertexAttribArray(1);
+	// density
+	glVertexAttribPointer(2, 1, GL_FLOAT, GL_FALSE, sizeof(GPU_Particle), (void*)(offsetof(GPU_Particle, density)));
+	glEnableVertexAttribArray(2);
 
 	// Unbind
 	glBindVertexArray(0);

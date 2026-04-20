@@ -5,7 +5,7 @@
 #include "TriangleRender.h"
 
 #include <utility>
-#include "utils/log.cpp"
+#include "Utils/log.cpp"
 
 std::vector<Vertex> TriangleRender::getVertices() {
 	return vertices;

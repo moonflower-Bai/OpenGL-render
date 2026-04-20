@@ -4,7 +4,7 @@
 
 #include <random>
 #include "GPU_FluidSimulator.h"
-#include "utils/getProgramPath.h"
+#include "Utils/getProgramPath.h"
 
 GLuint GPU_FluidSimulator::createComputeShaderProgram(const std::string& file)
 {
@@ -78,25 +78,47 @@ void GPU_FluidSimulator::onAttach() {
 	LOG_INFO << "GPU_FluidSimulator attached";
 	std::random_device rd;
 	std::mt19937 gen(rd());
-	std::uniform_real_distribution<float> dis(-0.25f, 0.25f); // 创建一个随机数生成器, 范围在-0.25到0.25之间
+	std::uniform_real_distribution<float> dis(-0.0015f, 0.0015f); // 创建一个随机数生成器, 范围在-0.25到0.25之间
 	LOG_INFO << "FluidSimulator init";
-	Eigen::Vector3f initPos = Eigen::Vector3f(0.0f, 0.0f, 0.0f);
-//	LOG_INFO << "boundary = " << params.boundaryMin << ", " << params.boundaryMax << ", grid = " << params.gridSize << ", cellSize = " << params.cellSize << ". ";
-	float CubeSize = std::ceil(pow(params.numParticles, 1.0f / 3.0f));
-	float spacing = 1.0f;
-	int numPerRow = (int)(CubeSize / spacing) + 1;
-	int numPerFloor = numPerRow * numPerRow;
-	for (int i = 0; i < params.numParticles; i++) {
-		int floor = i / numPerFloor;
-		int row = (i % numPerFloor) / numPerRow;
-		int col = (i % numPerFloor) % numPerRow;
-		Eigen::Vector3f pos = Eigen::Vector3f(static_cast<float>(col) * spacing + dis(gen),
-											  static_cast<float>(floor) * spacing + dis(gen),
-											  static_cast<float>(row) * spacing + dis(gen)) + initPos;
-//		particlePos[i] = Eigen::Vector4f(pos.x(), pos.y(), pos.z(), 1.0f);
-		particlePos.emplace_back(pos);
+	Eigen::Vector3f initPos = Eigen::Vector3f(1.0f, 1.0f, 1.0f);
+	int renderType = 2; // 1: cubic, 2: dam break
+	if(renderType == 1) {
+		float CubeSize = std::ceil(pow(params.numParticles, 1.0f / 3.0f)); // 当前方案是变成立方体
+		float spacing = 1.0f;
+		int numPerRow = (int) (CubeSize / spacing) + 1;
+		int numPerFloor = numPerRow * numPerRow;
+		for (int i = 0; i < params.numParticles; i++) {
+			int floor = i / numPerFloor;
+			int row = (i % numPerFloor) / numPerRow;
+			int col = (i % numPerFloor) % numPerRow;
+			Eigen::Vector3f pos = Eigen::Vector3f(static_cast<float>(col) * spacing + dis(gen),
+												  static_cast<float>(floor) * spacing + dis(gen),
+												  static_cast<float>(row) * spacing + dis(gen)) + initPos;
+			particlePos.emplace_back(pos);
 //		LOG_INFO << "particle " << i << " pos: " << particlePos[i].pos.transpose();
+		}
+		LOG_INFO << "row: " << numPerRow << ", col: " << numPerRow << ", floor: " << numPerFloor;
+		LOG_INFO << "Init particle nums is " << params.numParticles << ". " << "Finished init.";
 	}
+	else if(renderType == 2) {
+		// 溃坝式初始状态
+		float spacing = 1.0f;
+		int numPerRow = 21;
+		int numPerCol = 21;
+		int numPerFloor = params.numParticles / (numPerRow * numPerCol);
+		for (int i = 0; i < params.numParticles; i++) {
+			int floor = i / (numPerRow * numPerCol);
+			int row = (i % (numPerRow * numPerCol)) / numPerRow;
+			int col = (i % (numPerRow * numPerCol)) % numPerRow;
+			Eigen::Vector3f pos = Eigen::Vector3f(static_cast<float>(col) * spacing + dis(gen),
+												  static_cast<float>(floor) * spacing + dis(gen),
+												  static_cast<float>(row) * spacing + dis(gen)) + initPos;
+			particlePos.emplace_back(pos);
+		}
+		LOG_INFO << "row: " << numPerRow << ", col: " << numPerRow << ", floor: " << numPerFloor;
+		LOG_INFO << "Init particle nums is " << params.numParticles << ". " << "Finished init.";
+	}
+	// 接下来的方案是实现溃坝式初始状态
 //	LOG_INFO << "row: " << numPerRow << ", col: " << numPerRow << ", floor: " << numPerFloor;
 //	LOG_INFO << "Init particle nums is " << params.numParticles << ". " << "Finished init.";
 }

@@ -1,8 +1,9 @@
 ﻿//
 // Created by Jingren Bai on 25-9-9.
 //
-
+#ifdef _WIN32
 #include <windows.h>
+#endif
 
 #include "PointRender.h"
 #include "Rendering/Assets/fluid/CPU_process/FluidSimulator.h"

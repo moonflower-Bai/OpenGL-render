@@ -5,7 +5,12 @@
 #ifndef PARTICLE_H
 #define PARTICLE_H
 
-#include <Eigen/Eigen>
+#ifdef __unix__
+	#include <eigen3/Eigen/Eigen>
+#elif _WIN32
+	#include <Eigen/Eigen>
+#endif
+
 #include <vector>
 
 class Particle {

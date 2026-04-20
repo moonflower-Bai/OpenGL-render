@@ -9,14 +9,17 @@
 #include <windows.h>
 #elif __APPLE__
 #include <mach-o/dyld.h>
+#elif __linux__
+#include <unistd.h>
 #endif
-#include <filesystem>
 #include "log.cpp"
+#include <filesystem>
 #include <fstream>
 #include <string>
+
 namespace fs = std::filesystem;
 
 std::string getProgramPath();
 std::string getProjectPath();
 
-#endif //LEARNOPENGL_GETPROGRAMPATH_H
+#endif // LEARNOPENGL_GETPROGRAMPATH_H

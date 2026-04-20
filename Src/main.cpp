@@ -1,11 +1,15 @@
-﻿#include <Eigen/Eigen>
+﻿#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
+#include <Eigen/Eigen>
+#endif
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
-#include "utils/log.cpp"
+#include "Utils/log.cpp"
 //#include "Rendering/Primitives/Triangle/TriangleRender.h"
 //#include "Rendering/Pipeline/MainRenderThread_Primitive.h"
 #include <stb_image.h>
-#include "utils/getProgramPath.h"
+#include "Utils/getProgramPath.h"
 #include "Rendering/Scene/Camera.hpp"
 //#include "Rendering/Primitives/Point/PointRender.h"
 //#include "Rendering/Primitives/Ball/BallRender.h"
@@ -15,7 +19,9 @@
 #include "Rendering/Assets/fluid/GPU_process/GPU_FluidSimulator.h"
 #include "Rendering/Assets/fluid/GPU_process/GPU_FluidRender.h"
 
+#ifdef _WIN32
 #pragma comment(linker, "/STACK:1073741824")
+#endif
 
 int width = 1200, height = 900;
 //void lighting_main();
@@ -41,7 +47,7 @@ void particle_main(){
 			 Quaternions(Eigen::Vector4f(0, 0, 0, 1)),
 			 Eigen::Vector4f(1, 1, 1, 1)
 	);
-	particleEntity->addComponent<GPU_FluidSimulator>(20000);
+	particleEntity->addComponent<GPU_FluidSimulator>(50000);
 	particleEntity->addComponent<GPU_FluidRender>();
 	RenderThread_ECS::addEntity(particleEntity);
 	RenderThread_ECS::instance().waitForExit();

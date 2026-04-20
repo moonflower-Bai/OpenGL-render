@@ -7,11 +7,15 @@
 // C++ Headers
 #include <vector>
 // External Headers
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 // Internal Headers
-#include "utils/ReadShader.h"
+#include "Utils/ReadShader.h"
 #include "ECS/Components/Component.h"
 #include "GPU_Particle.h"
 
@@ -37,7 +41,7 @@ struct GPUFluidParams {
 	float h = 1.1f;
 	float mass = 1.0f;
 	float rho = 1.0f;
-	float neighbourRadius = 1.01f;
+	float neighbourRadius = 1.05f;
 	float lambdaEpsilon = 100.0f;
 	// std140 这里为了让下一个 ivec3 按 16 对齐，会留 2 个 float 空位
 	float _padScalar0 = 0.0f;
@@ -45,9 +49,9 @@ struct GPUFluidParams {
 
 	// --- gridSize + cellSize ---
 	int   gridSizeX = 32;
-	int   gridSizeY = 32;
+	int   gridSizeY = 2000;
 	int   gridSizeZ = 32;
-	float cellSize = 1.1f;
+	float cellSize = 2.51f;
 
 	// --- boundaryMin + pad ---
 	float boundaryMinX = 0.0f;
@@ -57,7 +61,7 @@ struct GPUFluidParams {
 
 	// --- boundaryMax + pad ---
 	float boundaryMaxX = 32.0f;
-	float boundaryMaxY = 100.0f;
+	float boundaryMaxY = 2000.0f;
 	float boundaryMaxZ = 32.0f;
 	float _pad1 = 0.0f;  // 对应 GLSL 里的 _pad1
 

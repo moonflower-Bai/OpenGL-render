@@ -7,7 +7,11 @@
 
 #include <vector>
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 
 struct GPU_Particle {
 	GPU_Particle() = default;

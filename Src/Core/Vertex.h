@@ -5,7 +5,11 @@
 #ifndef LEARNOPENGL_VERTEX_H
 #define LEARNOPENGL_VERTEX_H
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 #include "Rendering/Assets/fluid/CPU_process/Particle.h"
 
 struct alignas(16) Vertex {

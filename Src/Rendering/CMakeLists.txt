@@ -9,7 +9,9 @@ list(APPEND RENDER_SRC
         ${PROJECT_SOURCE_DIR}/Extern/src/glad.c
 )
 
-add_library(Rendering ${RENDER_SRC})
+add_library(Rendering ${RENDER_SRC}
+        Assets/MixtureModel/MixtureParticle.cpp
+        Assets/MixtureModel/MixtureParticle.h)
 
 target_include_directories(Rendering PUBLIC
         ${RENDER_DIR}
@@ -22,7 +24,7 @@ target_include_directories(Rendering PUBLIC
 target_link_libraries(Rendering PUBLIC
         Core
         Utils
-        glfw
-        glm::glm
+        glfw3
+        # glm::glm
         opengl32
 )

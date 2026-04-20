@@ -3,7 +3,7 @@
 //
 
 #include "MainRenderThread_Primitive.h"
-#include "utils/log.cpp"
+#include "Utils/log.cpp"
 
 MainRenderThread_Primitive &MainRenderThread_Primitive::instance() {
 	static MainRenderThread_Primitive instance;

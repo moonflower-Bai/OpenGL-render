@@ -3,7 +3,7 @@
 //
 
 #include "Camera.hpp"
-#include "utils/log.cpp"
+#include "Utils/log.cpp"
 
 Camera::Camera(Eigen::Vector3f cameraPosition,
 			   Eigen::Vector3f cameraTarget,

@@ -10,7 +10,7 @@
 #include <GLFW/glfw3.h>
 #include <stb_image.h>
 
-#include "utils/getProgramPath.h"
+#include "Utils/getProgramPath.h"
 
 class Texture {
 private:

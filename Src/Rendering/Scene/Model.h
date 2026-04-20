@@ -5,7 +5,11 @@
 #ifndef LEARNOPENGL_MODEL_H
 #define LEARNOPENGL_MODEL_H
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 #include <optional>
 
 #include "Quaternions.h"

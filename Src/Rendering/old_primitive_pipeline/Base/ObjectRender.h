@@ -7,7 +7,11 @@
 
 #include <string>
 
+#ifdef __linux__
+#include <eigen3/Eigen/Eigen>
+#elif _WIN32
 #include <Eigen/Eigen>
+#endif
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>
 
